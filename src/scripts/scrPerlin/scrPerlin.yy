@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scrPerlin",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scrPerlin",
+  "parent":{
+    "name":"Perlin",
+    "path":"folders/Scripts/Data/Perlin.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

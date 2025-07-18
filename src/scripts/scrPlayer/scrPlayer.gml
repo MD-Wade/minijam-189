@@ -1,6 +1,7 @@
 enum E_STATES_PLAYER {
     IDLE,
-    MOVING
+    MOVING,
+    TASK,
 }
 
 function player_init() {
@@ -10,7 +11,8 @@ function player_init() {
     player_init_state();
 }
 function player_init_node() {
-    node_movement_speed = 1;
+    node_movement_speed = 4;
+    node_target_instance = noone;
     node_current_instance = instance_nearest(x, y, Node);
     x = node_current_instance.x;
     y = node_current_instance.y;
@@ -52,14 +54,17 @@ function player_step() {
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:
             player_node_input_check();
-            player_run();
             break;
         case E_STATES_PLAYER.MOVING:
             player_node_input_check();
             player_run();
             break;
+        case E_STATES_PLAYER.TASK:
+            if (not instance_exists(TaskParent)) {
+                player_state_set(E_STATES_PLAYER.IDLE);
+            }
+            break;
     }
-    
 }
 
 function player_draw() {
@@ -73,6 +78,10 @@ function player_node_input_check() {
         var _node_current = node_map[$ _key_current];
 
         if (keyboard_check_pressed(ord(_key_current))) {
+            if (node_current_instance == _node_current) {
+                player_task_begin(_node_current);
+                break;
+            }
             player_node_move(_node_current);
         }
     }
@@ -81,32 +90,54 @@ function player_node_move(_node_instance) {
     show_debug_message("Moving to node: " + string(_node_instance.node_input));
     var _target_x = _node_instance.x;
     var _target_y = _node_instance.y;
+    node_current_instance = noone;
+    node_target_instance = _node_instance;
+    player_state_set(E_STATES_PLAYER.MOVING);
     mp_grid_path(pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, false);
     path_start(pathfinding_path, node_movement_speed, path_action_stop, false);
 }
 function player_depth_update() {
     depth = -y;
 }
-function player_run() {
-    if (path_index != -1) {
-        show_debug_message("RUNNING " + string(path_index) + " " + string(path_get_number(path_index)));
-        run_tick += (1 / room_speed);
-        if (run_tick >= run_tick_maximum) {
-            player_run_tick_target();
-        }
-    } else {
-        run_tick = 0;
-        run_sound_index = 0;
-        image_angle = 0;
+function player_state_set(_state) {
+    if (state_current != _state) {
+        state_previous = state_current;
+        state_current = _state;
+        state_tick = 0;
     }
 }
-function player_run_tick_target() {
+function player_run() {
+    if (path_index == -1) {
+        player_run_end();
+    }
+
+    run_tick += (1 / room_speed);
+    if (run_tick >= run_tick_maximum) {
+        player_run_tick_target();
+    }
+}
+function player_run_end() {
     run_tick = 0;
-    run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
+    run_sound_index = 0;
+    image_angle = 0;
+    node_current_instance = node_target_instance;
+    node_target_instance = noone;
+    player_state_set(E_STATES_PLAYER.IDLE);
+    player_run_sound_stop();
+}
+function player_run_sound_stop() {
     if (audio_is_playing(run_sound_instance_last)) {
         audio_stop_sound(run_sound_instance_last);
     }
+}
+function player_run_sound_play() {
+    player_run_sound_stop();
+    run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
     run_sound_instance_last = audio_play_sound(run_sound_array[run_sound_index], 0, false);
+}
+function player_run_tick_target() {
+    run_tick = 0;
+    player_run_sound_play();
 
     switch (run_sound_index) {
         case 0:
@@ -116,4 +147,9 @@ function player_run_tick_target() {
             image_angle = 15;
             break;
     }
+}
+function player_task_begin(_node_instance) {
+    show_debug_message("Task begin at node: " + string(_node_instance.node_input));
+    player_state_set(E_STATES_PLAYER.TASK);
+    _node_instance.node_action();
 }
