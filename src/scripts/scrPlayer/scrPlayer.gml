@@ -50,6 +50,7 @@ function player_init_state() {
 
 function player_step() {
     player_depth_update();
+    player_camera_modulate();
 
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:
@@ -152,4 +153,8 @@ function player_task_begin(_node_instance) {
     show_debug_message("Task begin at node: " + string(_node_instance.node_input));
     player_state_set(E_STATES_PLAYER.TASK);
     _node_instance.node_action();
+}
+function player_camera_modulate() {
+    var _view_angle = wave(-1, 1, 20, 0);
+    camera_set_view_angle(view_camera[0], _view_angle);
 }

@@ -1,4 +1,4 @@
-surface_resize(application_surface, 1280, 720);
+surface_resize(application_surface, 1920, 1080);
 perlin_noise_create_buffer();
 
 instance_create_depth(0, 0, 0, MusicController);
