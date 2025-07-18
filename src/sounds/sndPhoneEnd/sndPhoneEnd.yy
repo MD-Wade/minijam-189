@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"sndPhoneEnd",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":320,
+  "compression":0,
+  "conversionMode":0,
+  "duration":0.5769161,
+  "name":"sndPhoneEnd",
+  "parent":{
+    "name":"SFX",
+    "path":"folders/Sounds/SFX.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":48000,
+  "soundFile":"sndPhoneEnd.wav",
+  "type":1,
+  "volume":1.0,
+}

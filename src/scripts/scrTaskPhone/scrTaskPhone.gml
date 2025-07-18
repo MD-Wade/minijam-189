@@ -29,6 +29,8 @@ function task_phone_init() {
     task_phone_init_transition();
     task_phone_init_text();
     task_phone_init_conversation();
+
+    audio_play_sound(sndPhoneBegin, 1, false);
 }
 function task_phone_init_state() {
     state_current = E_STATES_TASK_PHONE.TRANSITION_IN;
@@ -90,7 +92,7 @@ function task_phone_step_state_minigame() {
     if (dialogue_char_index < string_length(dialogue_incoming)) {
         var _character_current = string_char_at(dialogue_incoming, dialogue_char_index);
         var _dialogue_speed = task_phone_get_dialogue_speed(_character_current);
-        var _current_speed = (1 / room_speed) * _dialogue_speed;
+        var _current_speed = (1 / game_get_speed(gamespeed_fps)) * _dialogue_speed;
 
         dialogue_incoming_tick += _current_speed;
         while (dialogue_incoming_tick >= dialogue_incoming_tick_maximum) {
@@ -99,6 +101,16 @@ function task_phone_step_state_minigame() {
         }
 
         dialogue_incoming_string_current = string_copy(dialogue_incoming, 1, dialogue_char_index);
+    }
+
+    var _buttons_to_check = array_length(dialogue_response_options);
+    for (var _button_index = 0; _button_index < _buttons_to_check; _button_index++) {
+        var _button_string = string(_button_index + 1);
+        if (keyboard_check_pressed(ord(_button_string))) {
+            var _response_data = dialogue_response_options[_button_index];
+            show_debug_message("Response selected: " + _response_data.text);
+            task_phone_select_response(_button_index);
+        }
     }
 }
 
@@ -165,8 +177,9 @@ function task_phone_draw_response_options() {
     draw_set_font(fntPhoneResponse);
     draw_set_alpha(1.0);
     var _options_count = array_length(dialogue_response_options);
-    for (var _option_index = 0; _option_index < _options_count; _option_index++) {
-        var _response_data = dialogue_response_options[_option_index];
+    for (var _option_index = 0; _option_index < _options_count; _option_index ++) {
+        var _option_index_reversed = (_options_count - 1) - _option_index;
+        var _response_data = dialogue_response_options[_option_index_reversed];
 
         var _response_text = _response_data.text;
         var _bbox_top = _response_y - _response_box_height;
@@ -175,7 +188,7 @@ function task_phone_draw_response_options() {
         var _bbox_right = _response_x + _response_box_width;
         var _text_x = _bbox_left + 8;
         var _text_y = mean(_bbox_top, _bbox_bottom);
-        var _text_shown = "[" + string(_option_index + 1) + "] " + _response_text;
+        var _text_shown = "[" + string(_option_index_reversed + 1) + "] " + _response_text;
 
         draw_set_colour(c_black);
         draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
@@ -203,6 +216,16 @@ function task_phone_get_dialogue_speed(_character_current) {
 function task_phone_get_conversation(_difficulty_weight=1.0) {
     var _task_random_index = irandom(array_length(global.task_pool_phone_conversations) - 1);
     return global.task_pool_phone_conversations[_task_random_index];
+}
+
+function task_phone_select_response(_response_index) {
+    if (dialogue_response_options == undefined || _response_index < 0 || _response_index >= array_length(dialogue_response_options)) {
+        show_debug_message("Invalid response index: " + string(_response_index));
+        return;
+    }
+
+    audio_play_sound(sndPhoneEnd, 1, false);
+    instance_destroy();
 }
 
 function task_phone_minigame_entry() {
