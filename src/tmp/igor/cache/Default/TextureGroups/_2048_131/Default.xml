@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureGroup>
-  <texture scale="1" mipsToGenerate="0" texwidth="512" texheight="1024">default_0.bz2</texture>
-  <tpe x="0" y="2" tpage="default_0.bz2">fntPhoneDialogue_Mini Jam 189_fntPhoneDialogue.tpe</tpe>
-  <tpe x="0" y="262" tpage="default_0.bz2">fntPhoneResponse_Mini Jam 189_fntPhoneResponse.tpe</tpe>
-  <tpe x="2" y="522" tpage="default_0.bz2">sPhone_Mini Jam 189_e835c4b4-98c6-4740-b0f5-71c8ecef50c4.tpe</tpe>
-  <tpe x="2" y="886" tpage="default_0.bz2">sWall_Mini Jam 189_36d5d4c8-334e-4647-adcf-71e46526c856.tpe</tpe>
-  <tpe x="38" y="886" tpage="default_0.bz2">sNode_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
-  <tpe x="2" y="938" tpage="default_0.bz2">sPlayer_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
+  <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="1024">default_0.bz2</texture>
+  <tpe x="2" y="2" tpage="default_0.bz2">fntPhoneResponse_Mini Jam 189_fntPhoneResponse.tpe</tpe>
+  <tpe x="2" y="518" tpage="default_0.bz2">fntPhoneDialogue_Mini Jam 189_fntPhoneDialogue.tpe</tpe>
+  <tpe x="518" y="2" tpage="default_0.bz2">sPhone_Mini Jam 189_e835c4b4-98c6-4740-b0f5-71c8ecef50c4.tpe</tpe>
+  <tpe x="518" y="366" tpage="default_0.bz2">sWall_Mini Jam 189_36d5d4c8-334e-4647-adcf-71e46526c856.tpe</tpe>
+  <tpe x="554" y="366" tpage="default_0.bz2">sNode_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
+  <tpe x="518" y="418" tpage="default_0.bz2">sPlayer_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
 </TextureGroup>
