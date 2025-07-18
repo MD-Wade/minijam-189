@@ -1,6 +1,7 @@
 function player_init() {
     player_init_node();
     player_init_pathfinding();
+    player_init_run();
 }
 function player_init_node() {
     node_movement_speed = 4;
@@ -25,9 +26,18 @@ function player_init_pathfinding() {
     pathfinding_path = path_add();
     mp_grid_add_instances(pathfinding_grid, Wall, true);
 }
+function player_init_run() {
+    run_sound_array = [sndPlayerRun1, sndPlayerRun2];
+    run_sound_index = 0;
+    run_sound_instance_last = -1;
+    run_tick = 0;
+    run_tick_maximum = 0.35;
+}
 
 function player_step() {
     player_node_input_check();
+    player_depth_update();
+    player_run();
 }
 
 function player_draw() {
@@ -49,9 +59,39 @@ function player_node_move(_node_instance) {
     show_debug_message("Moving to node: " + string(_node_instance.node_input));
     var _target_x = _node_instance.x;
     var _target_y = _node_instance.y;
-    mp_grid_path(pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, true);
+    mp_grid_path(pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, false);
     path_start(pathfinding_path, node_movement_speed, path_action_stop, false);
 }
 function player_depth_update() {
     depth = -y;
+}
+function player_run() {
+    if (path_index != -1) {
+        show_debug_message("RUNNING " + string(path_index) + " " + string(path_get_number(path_index)));
+        run_tick += (1 / room_speed);
+        if (run_tick >= run_tick_maximum) {
+            player_run_tick_target();
+        }
+    } else {
+        run_tick = 0;
+        run_sound_index = 0;
+        image_angle = 0;
+    }
+}
+function player_run_tick_target() {
+    run_tick = 0;
+    run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
+    if (audio_is_playing(run_sound_instance_last)) {
+        audio_stop_sound(run_sound_instance_last);
+    }
+    run_sound_instance_last = audio_play_sound(run_sound_array[run_sound_index], 0, false);
+
+    switch (run_sound_index) {
+        case 0:
+            image_angle = -15;
+            break;
+        case 1:
+            image_angle = 15;
+            break;
+    }
 }

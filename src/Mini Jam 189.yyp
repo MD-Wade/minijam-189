@@ -38,6 +38,8 @@
     {"id":{"name":"roomDemo","path":"rooms/roomDemo/roomDemo.yy",},},
     {"id":{"name":"scrActiveTask","path":"scripts/scrActiveTask/scrActiveTask.yy",},},
     {"id":{"name":"scrPlayer","path":"scripts/scrPlayer/scrPlayer.yy",},},
+    {"id":{"name":"sndPlayerRun1","path":"sounds/sndPlayerRun1/sndPlayerRun1.yy",},},
+    {"id":{"name":"sndPlayerRun2","path":"sounds/sndPlayerRun2/sndPlayerRun2.yy",},},
     {"id":{"name":"sNode","path":"sprites/sNode/sNode.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"sWall","path":"sprites/sWall/sWall.yy",},},
