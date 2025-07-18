@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scrPerlin",
+  "%Name":"scrMusicController",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scrPerlin",
+  "name":"scrMusicController",
   "parent":{
-    "name":"Data",
-    "path":"folders/Scripts/Data.yy",
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

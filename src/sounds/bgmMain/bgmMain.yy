@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"sndPlayerRun2",
+  "%Name":"bgmMain",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,17 +9,17 @@
   "bitRate":320,
   "compression":0,
   "conversionMode":0,
-  "duration":1.8461452,
-  "name":"sndPlayerRun2",
+  "duration":128.0,
+  "name":"bgmMain",
   "parent":{
-    "name":"SFX",
-    "path":"folders/Sounds/SFX.yy",
+    "name":"BGM",
+    "path":"folders/Sounds/BGM.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":48000,
-  "soundFile":"sndPlayerRun2.wav",
+  "soundFile":"bgmMain.ogg",
   "type":1,
   "volume":1.0,
 }
