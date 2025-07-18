@@ -1,10 +1,16 @@
+enum E_STATES_PLAYER {
+    IDLE,
+    MOVING
+}
+
 function player_init() {
     player_init_node();
     player_init_pathfinding();
     player_init_run();
+    player_init_state();
 }
 function player_init_node() {
-    node_movement_speed = 4;
+    node_movement_speed = 1;
     node_current_instance = instance_nearest(x, y, Node);
     x = node_current_instance.x;
     y = node_current_instance.y;
@@ -33,11 +39,27 @@ function player_init_run() {
     run_tick = 0;
     run_tick_maximum = 0.35;
 }
+function player_init_state() {
+    state_current = E_STATES_PLAYER.IDLE;
+    state_previous = E_STATES_PLAYER.IDLE;
+    state_tick = 0;
+    state_tick_maximum = 0.5;
+}
 
 function player_step() {
-    player_node_input_check();
     player_depth_update();
-    player_run();
+
+    switch (state_current) {
+        case E_STATES_PLAYER.IDLE:
+            player_node_input_check();
+            player_run();
+            break;
+        case E_STATES_PLAYER.MOVING:
+            player_node_input_check();
+            player_run();
+            break;
+    }
+    
 }
 
 function player_draw() {

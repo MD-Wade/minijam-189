@@ -34,6 +34,8 @@
   "resources":[
     {"id":{"name":"Node","path":"objects/Node/Node.yy",},},
     {"id":{"name":"Player","path":"objects/Player/Player.yy",},},
+    {"id":{"name":"TaskParent","path":"objects/TaskParent/TaskParent.yy",},},
+    {"id":{"name":"TaskPhone","path":"objects/TaskPhone/TaskPhone.yy",},},
     {"id":{"name":"Wall","path":"objects/Wall/Wall.yy",},},
     {"id":{"name":"roomDemo","path":"rooms/roomDemo/roomDemo.yy",},},
     {"id":{"name":"scrActiveTask","path":"scripts/scrActiveTask/scrActiveTask.yy",},},
