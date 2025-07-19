@@ -39,6 +39,7 @@
   },
   "name":"Mini Jam 189",
   "resources":[
+    {"id":{"name":"fntHud","path":"fonts/fntHud/fntHud.yy",},},
     {"id":{"name":"fntPhoneDialogue","path":"fonts/fntPhoneDialogue/fntPhoneDialogue.yy",},},
     {"id":{"name":"fntPhoneResponse","path":"fonts/fntPhoneResponse/fntPhoneResponse.yy",},},
     {"id":{"name":"fntTaskTitle","path":"fonts/fntTaskTitle/fntTaskTitle.yy",},},

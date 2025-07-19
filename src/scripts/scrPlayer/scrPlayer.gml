@@ -3,12 +3,36 @@ enum E_STATES_PLAYER {
     MOVING,
     TASK,
 }
+enum E_STATES_PROMPT_TAB {
+    IDLE,
+    ACTIVE,
+
+}
+
+function PromptTab(_label) constructor {
+    self.label = _label;
+    self.state = E_STATES_PROMPT_TAB.IDLE;
+    self.alert_count = 0;
+    self.width_current = 0;
+    self.width_desired = 24;
+    self.colour_current = c_black;
+    self.colour_desired = c_white;
+    self.interpolate_speed = 0.05;
+
+    function step_interpolate() {
+        self.colour_current = merge_colour(self.colour_current, self.colour_desired, self.interpolate_speed);
+        self.width_current = lerp(self.width_current, self.width_desired, self.interpolate_speed);
+    }
+}
 
 function player_init() {
     player_init_node();
     player_init_pathfinding();
     player_init_run();
     player_init_state();
+    player_init_performance();
+    player_init_prompts();
+    player_prompt_set_active(0);
 }
 function player_init_node() {
     node_movement_speed = 4;
@@ -41,6 +65,36 @@ function player_init_state() {
     state_tick = 0;
     state_tick_maximum = 0.5;
 }
+function player_init_prompts() {
+    prompt_tabs = [];
+    for (var _prompt_index = 0; _prompt_index < node_count_total; _prompt_index ++) {
+        var _prompt_label = string(_prompt_index + 1);
+        var _prompt_node = node_map[$ _prompt_label];
+        array_push(prompt_tabs, new PromptTab(_prompt_label));
+    }
+
+    var _border = 4;
+    prompt_tab_width = 16;
+    prompt_tab_height = 16;
+    prompt_tabs_begin_x = performance_bar_x1;
+    prompt_tabs_begin_y = performance_bar_y2;
+    prompt_tabs_end_x = 0;
+    prompt_tabs_end_y = (prompt_tabs_begin_y + (prompt_tab_height * node_count_total));
+
+    prompt_length_base = 16;
+    prompt_length_alert = 80;
+    prompt_length_mod_min = 0.94;
+    prompt_length_mod_max = 1.10;
+}
+function player_init_performance() {
+    performance_value = 100;
+    var _performance_bar_width = 64;
+    var _performance_bar_height = 16;
+    performance_bar_x1 = 0;
+    performance_bar_y1 = 0;
+    performance_bar_x2 = performance_bar_x1 + _performance_bar_width;
+    performance_bar_y2 = performance_bar_y1 + _performance_bar_height;
+}
 
 function player_step() {
     player_depth_update();
@@ -64,6 +118,74 @@ function player_step() {
 function player_draw() {
     draw_self();
 }
+function player_draw_end() {
+    player_draw_prompt_tabs();
+    player_draw_performance_bar();
+}
+function player_draw_prompt_tabs() {
+    var _prompt_tab_x = prompt_tabs_begin_x;
+    var _prompt_tab_y = prompt_tabs_begin_y;
+    draw_set_font(fntHud);
+    for (var _prompt_index = 0; _prompt_index < array_length(prompt_tabs); _prompt_index ++) {
+        var _prompt_tab = prompt_tabs[_prompt_index];
+        player_draw_prompt_tab(_prompt_tab_x, _prompt_tab_y, _prompt_index);
+        _prompt_tab_y += prompt_tab_height;
+        _prompt_tab.step_interpolate();
+    }
+}
+function player_draw_prompt_tab(_x, _y, _prompt_tab_index) {
+    var _prompt_tab = prompt_tabs[_prompt_tab_index];
+    _prompt_tab.width_desired = prompt_length_base;
+    if (_prompt_tab.alert_count > 0) {
+        _prompt_tab.width_desired = prompt_length_alert;
+    }
+
+    var _bbox_left = _x;
+    var _bbox_top = _y;
+    var _bbox_right = (_x + _prompt_tab.width_current);
+    var _bbox_bottom = (_y + prompt_tab_height);
+    var _border_size = 1;
+    draw_set_colour(c_black);
+    draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
+    draw_set_colour(_prompt_tab.colour_current);
+    draw_rectangle(_bbox_left + _border_size, _bbox_top + _border_size,
+                     _bbox_right - _border_size, _bbox_bottom - _border_size, false);
+
+    switch (_prompt_tab.state) {
+        case E_STATES_PROMPT_TAB.IDLE:
+            _prompt_tab.colour_desired = c_black;
+            break;
+        case E_STATES_PROMPT_TAB.ACTIVE:
+            _prompt_tab.colour_desired = merge_colour(c_aqua, c_white, 0.4);
+            break;
+    }
+
+    draw_set_halign(fa_right);
+    draw_set_valign(fa_middle);
+    draw_text_perlin(
+        _bbox_right - _border_size,
+        mean(_bbox_top, _bbox_bottom),
+        _prompt_tab.label,
+        1.0, 0.5, 1.0, c_white, c_dkgray, 1.0, _prompt_tab_index * 128
+    )
+}
+function player_draw_performance_bar() {
+    var _outline_width = 2;
+    draw_set_colour(c_black);
+    draw_rectangle(
+        performance_bar_x1,
+        performance_bar_y1,
+        performance_bar_x2,
+        performance_bar_y2, false);
+
+    draw_healthbar(
+        performance_bar_x1 + _outline_width,
+        performance_bar_y1 + _outline_width,
+        performance_bar_x2 - _outline_width,
+        performance_bar_y2 - _outline_width,
+        performance_value,
+        c_black, c_maroon, c_red, 0, true, true);
+}
 
 function player_node_input_check() {
     var _key_checks = variable_struct_get_names(node_map);
@@ -82,6 +204,8 @@ function player_node_input_check() {
 }
 function player_node_move(_node_instance) {
     show_debug_message("Moving to node: " + string(_node_instance.node_input));
+    var _node_index = player_get_node_index_from_input(_node_instance.node_input);
+    player_prompt_set_active(_node_index);
     var _target_x = _node_instance.x;
     var _target_y = _node_instance.y;
     node_current_instance = noone;
@@ -148,7 +272,26 @@ function player_task_begin(_node_instance) {
     player_state_set(E_STATES_PLAYER.TASK);
     _node_instance.node_action();
 }
+function player_prompt_set_active(_prompt_index_active) {
+    for (var _prompt_index_iteration = 0; _prompt_index_iteration < array_length(prompt_tabs); _prompt_index_iteration ++) {
+        var _prompt_tab = prompt_tabs[_prompt_index_iteration];
+        if (_prompt_tab.state == E_STATES_PROMPT_TAB.ACTIVE) {
+            _prompt_tab.state = E_STATES_PROMPT_TAB.IDLE;
+            show_debug_message("Deactivating prompt tab: " + string(_prompt_index_iteration));
+        }
+
+        if (_prompt_index_iteration == _prompt_index_active) {
+            _prompt_tab.state = E_STATES_PROMPT_TAB.ACTIVE;
+            show_debug_message("Activating prompt tab: " + string(_prompt_index_iteration));
+        }
+    }
+}
 function player_camera_modulate() {
     var _view_angle = wave(-1, 1, 20, 0);
     camera_set_view_angle(view_camera[0], _view_angle);
+}
+
+function player_get_node_index_from_input(_input) {
+    var _real = real(_input);
+    return (_real - 1);
 }

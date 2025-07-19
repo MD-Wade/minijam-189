@@ -126,7 +126,7 @@ function fade(_t) {
     return _t * _t * _t * (_t * (_t * 6 - 15) + 10);
 }
 
-function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _noise_speed=1.0, _colour, _shadow_colour=c_black, _shadow_distance=0) {
+function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _noise_speed=1.0, _colour, _shadow_colour=c_black, _shadow_distance=0, _seed=0) {
     // --- CHANGE 1: Save the user's current alignment settings ---
     var _original_halign = draw_get_halign();
     var _original_valign = draw_get_valign();
@@ -170,8 +170,8 @@ function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _noise_
             _char_id++;
             var _char = string_char_at(_current_line, j);
 
-            var _nx = noise_range(_time + _char_id * 0.1, _noise_scale, -1, 1);
-            var _ny = noise_range(_time + _char_id * 0.1 + 1000, _noise_scale, -1, 1);
+            var _nx = noise_range(_time + _char_id * 0.1 + _seed, _noise_scale, -1, 1);
+            var _ny = noise_range(_time + _char_id * 0.1 + 1000 + _seed, _noise_scale, -1, 1);
 
             var _final_x = _cursor_x + _nx * _noise_magnitude;
             var _final_y = _cursor_y + _ny * _noise_magnitude;

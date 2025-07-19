@@ -2,18 +2,21 @@
 <TextureGroup>
   <texture scale="1" mipsToGenerate="0" texwidth="1024" texheight="2048">default_0.bz2</texture>
   <tpe x="0" y="2" tpage="default_0.bz2">fntTaskTitle_Mini Jam 189_fntTaskTitle.tpe</tpe>
-  <tpe x="2" y="518" tpage="default_0.bz2">fntPhoneResponse_Mini Jam 189_fntPhoneResponse.tpe</tpe>
-  <tpe x="2" y="1034" tpage="default_0.bz2">fntPhoneDialogue_Mini Jam 189_fntPhoneDialogue.tpe</tpe>
-  <tpe x="2" y="1294" tpage="default_0.bz2">sTaskObjectPhone_Mini Jam 189_e835c4b4-98c6-4740-b0f5-71c8ecef50c4.tpe</tpe>
-  <tpe x="206" y="1294" tpage="default_0.bz2">sTaskObjectFaxPile_Mini Jam 189_1a33c74d-abf0-4b00-a158-f00faf6912c3.tpe</tpe>
-  <tpe x="2" y="1658" tpage="default_0.bz2">sTaskObjectFaxMachine_Mini Jam 189_ab0352dc-e29b-4b28-a801-04c883160d2a.tpe</tpe>
-  <tpe x="390" y="1294" tpage="default_0.bz2">sWall_Mini Jam 189_36d5d4c8-334e-4647-adcf-71e46526c856.tpe</tpe>
-  <tpe x="206" y="1469" tpage="default_0.bz2">sNode_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
-  <tpe x="199" y="1658" tpage="default_0.bz2">sNodeNpc_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
-  <tpe x="2" y="1796" tpage="default_0.bz2">sNpc_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
-  <tpe x="426" y="1294" tpage="default_0.bz2">sPlayer_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
-  <tpe x="390" y="1346" tpage="default_0.bz2">sWorldFaxMachine_Mini Jam 189_b9ce75e0-90f4-438b-8c2e-d58a485e5d6f.tpe</tpe>
-  <tpe x="242" y="1469" tpage="default_0.bz2">sTable_Mini Jam 189_a6297587-a1a7-493e-8ec9-75206cc21d3c.tpe</tpe>
-  <tpe x="199" y="1694" tpage="default_0.bz2">sWorldFaxPile_Mini Jam 189_4c5dc146-1834-4a09-b7f8-80ae32ec1437.tpe</tpe>
-  <tpe x="235" y="1505" tpage="default_0.bz2">sWorldPhone_Mini Jam 189_a7760257-dfd8-4315-9d49-54a9c3a05a51.tpe</tpe>
+  <tpe x="2" y="518" tpage="default_0.bz2">fntHud_Mini Jam 189_fntHud.tpe</tpe>
+  <tpe x="2" y="1034" tpage="default_0.bz2">fntPhoneResponse_Mini Jam 189_fntPhoneResponse.tpe</tpe>
+  <tpe x="2" y="1550" tpage="default_0.bz2">fntPhoneDialogue_Mini Jam 189_fntPhoneDialogue.tpe</tpe>
+  <tpe x="518" y="518" tpage="default_0.bz2">sTaskObjectPhone_Mini Jam 189_e835c4b4-98c6-4740-b0f5-71c8ecef50c4.tpe</tpe>
+  <tpe x="520" y="884" tpage="default_0.bz2">TileSet_Mini Jam 189_output_tileset.tpe</tpe>
+  <tpe x="518" y="1106" tpage="default_0.bz2">sTaskObjectFaxPile_Mini Jam 189_1a33c74d-abf0-4b00-a158-f00faf6912c3.tpe</tpe>
+  <tpe x="518" y="1281" tpage="default_0.bz2">sTaskObjectFaxMachine_Mini Jam 189_ab0352dc-e29b-4b28-a801-04c883160d2a.tpe</tpe>
+  <tpe x="518" y="1419" tpage="default_0.bz2">sTiles_Mini Jam 189_ceae5686-3bbb-4e8c-940c-99ffcf3861e5.tpe</tpe>
+  <tpe x="702" y="1106" tpage="default_0.bz2">sWall_Mini Jam 189_36d5d4c8-334e-4647-adcf-71e46526c856.tpe</tpe>
+  <tpe x="518" y="1543" tpage="default_0.bz2">sNode_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
+  <tpe x="702" y="1158" tpage="default_0.bz2">sNodeNpc_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
+  <tpe x="554" y="1543" tpage="default_0.bz2">sNpc_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
+  <tpe x="518" y="1579" tpage="default_0.bz2">sPlayer_Mini Jam 189_a8e0d9c6-d537-4599-acb6-016fe2001d67.tpe</tpe>
+  <tpe x="702" y="1194" tpage="default_0.bz2">sWorldFaxMachine_Mini Jam 189_b9ce75e0-90f4-438b-8c2e-d58a485e5d6f.tpe</tpe>
+  <tpe x="586" y="1543" tpage="default_0.bz2">sTable_Mini Jam 189_a6297587-a1a7-493e-8ec9-75206cc21d3c.tpe</tpe>
+  <tpe x="714" y="1419" tpage="default_0.bz2">sWorldFaxPile_Mini Jam 189_4c5dc146-1834-4a09-b7f8-80ae32ec1437.tpe</tpe>
+  <tpe x="554" y="1576" tpage="default_0.bz2">sWorldPhone_Mini Jam 189_a7760257-dfd8-4315-9d49-54a9c3a05a51.tpe</tpe>
 </TextureGroup>
