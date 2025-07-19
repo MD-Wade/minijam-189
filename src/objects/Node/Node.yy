@@ -8,8 +8,8 @@
   "name":"Node",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"WorldObjects",
+    "path":"folders/Objects/WorldObjects.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -36,5 +36,5 @@
     "path":"sprites/sNode/sNode.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

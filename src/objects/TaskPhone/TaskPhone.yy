@@ -10,8 +10,8 @@
   "name":"TaskPhone",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Tasks",
+    "path":"folders/Objects/Tasks.yy",
   },
   "parentObjectId":{
     "name":"TaskParent",
@@ -34,7 +34,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sTaskObjectPhone",
+    "path":"sprites/sTaskObjectPhone/sTaskObjectPhone.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

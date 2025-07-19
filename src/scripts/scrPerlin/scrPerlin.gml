@@ -126,35 +126,73 @@ function fade(_t) {
     return _t * _t * _t * (_t * (_t * 6 - 15) + 10);
 }
 
-function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _colour, _shadow_colour=c_black, _shadow_distance=0) {
-    var _len = string_length(_text);
-    var _nx, _ny, _char_x, _char_y;
-    var _time = current_time / 1000;
-    var _begin_x = _x;
-    var _begin_y = _y;
+function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _noise_speed=1.0, _colour, _shadow_colour=c_black, _shadow_distance=0) {
+    // --- CHANGE 1: Save the user's current alignment settings ---
+    var _original_halign = draw_get_halign();
+    var _original_valign = draw_get_valign();
+
+    // --- CHANGE 2: Force alignment to a predictable state for manual drawing ---
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_top);
+
+    var _lines = string_split(_text, "\n");
+    var _line_count = array_length(_lines);
+    var _line_height = string_height("A");
+    var _total_block_height = _line_count * _line_height;
+
+    // Calculate vertical start based on the user's original valign setting
+    var _start_y;
+    switch (_original_valign) {
+        case fa_middle: _start_y = _y - _total_block_height / 2;    break;
+        case fa_bottom: _start_y = _y - _total_block_height;        break;
+        default:        _start_y = _y;                              break; // fa_top
+    }
     
-    for (var _i = 1; _i <= _len; _i++) {
-        var _char = string_char_at(_text, _i);
-        _nx = noise_range(_time + _i * 0.5, _noise_scale, -1, 1);
-        _ny = noise_range(_time + _i * 0.5 + 1000, _noise_scale, -1, 1);
-        _char_x = _x + _nx * _noise_magnitude;
-        _char_y = _y + _ny * _noise_magnitude;
-        if (_shadow_distance != 0) {
-            draw_set_colour(_shadow_colour);
-            draw_text(_char_x + _shadow_distance, _char_y + _shadow_distance, _char);
-            draw_set_colour(_colour);
-            draw_text(_char_x - _shadow_distance, _char_y - _shadow_distance, _char);
-        } else {
-            draw_set_colour(_colour);
-            draw_text(_char_x, _char_y, _char);
+    var _time = (current_time / 1000) * _noise_speed;
+    var _char_id = 0;
+
+    for (var i = 0; i < _line_count; i++) {
+        var _current_line = _lines[i];
+        var _line_width = string_width(_current_line);
+
+        // Calculate horizontal start based on the user's original halign setting
+        var _start_x;
+        switch (_original_halign) {
+            case fa_center: _start_x = _x - _line_width / 2;        break;
+            case fa_right:  _start_x = _x - _line_width;            break;
+            default:        _start_x = _x;                          break; // fa_left
         }
-        _x += string_width(_char);
-		
-        if (_char == "\n") {
-            _x = _begin_x;
-            _y += string_height(_char);
+
+        var _cursor_x = _start_x;
+        var _cursor_y = _start_y + (i * _line_height);
+
+        for (var j = 1; j <= string_length(_current_line); j++) {
+            _char_id++;
+            var _char = string_char_at(_current_line, j);
+
+            var _nx = noise_range(_time + _char_id, _noise_scale, -1, 1);
+            var _ny = noise_range(_time + _char_id + 1000, _noise_scale, -1, 1);
+            
+            var _final_x = _cursor_x + _nx * _noise_magnitude;
+            var _final_y = _cursor_y + _ny * _noise_magnitude;
+
+            if (_shadow_distance != 0) {
+                draw_set_colour(_shadow_colour);
+                draw_text(_final_x + _shadow_distance, _final_y + _shadow_distance, _char);
+                draw_set_colour(_colour);
+                draw_text(_final_x - _shadow_distance, _final_y - _shadow_distance, _char);
+            } else {
+                draw_set_colour(_colour);
+                draw_text(_final_x, _final_y, _char);
+            }
+
+            _cursor_x += string_width(_char);
         }
     }
+
+    // --- CHANGE 3: Restore the user's original alignment settings ---
+    draw_set_halign(_original_halign);
+    draw_set_valign(_original_valign);
 }
 
 global.perlin_noise_buffer = undefined;

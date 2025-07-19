@@ -1,17 +1,18 @@
 {
   "$GMObject":"",
   "%Name":"Wall",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"Wall",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"WorldObjects",
+    "path":"folders/Objects/WorldObjects.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"WorldObject",
+    "path":"objects/WorldObject/WorldObject.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

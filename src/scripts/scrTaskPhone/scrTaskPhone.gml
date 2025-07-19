@@ -19,33 +19,14 @@ array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
     ]
 ));
 
-enum E_STATES_TASK_PHONE {
-    TRANSITION_IN,
-    MINIGAME,
-}
-
 function task_phone_init() {
-    task_phone_init_state();
-    task_phone_init_transition();
+	task_parent_init();
+    task_parent_init_object(sprite_index);
     task_phone_init_text();
     task_phone_init_conversation();
 
+    title_text = "PHONE";
     audio_play_sound(sndPhoneBegin, 1, false);
-}
-function task_phone_init_state() {
-    state_current = E_STATES_TASK_PHONE.TRANSITION_IN;
-    state_previous = E_STATES_TASK_PHONE.TRANSITION_IN;
-    state_tick = 0;
-    state_tick_maximum = 0.5;
-    state_tick_alpha = 0;
-}
-function task_phone_init_transition() {
-    var _phone_width = sprite_get_width(sPhone);
-    var _phone_height = sprite_get_height(sPhone);
-    phone_begin_x = (room_width);
-    phone_begin_y = (room_height / 2);
-    phone_target_x = (room_width - _phone_width);
-    phone_target_y = (room_height / 2);
 }
 function task_phone_init_text() {
     dialogue_incoming_box_x1 = (8);
@@ -71,23 +52,16 @@ function task_phone_init_conversation() {
 
 function task_phone_step() {
     switch (state_current) {
-        case E_STATES_TASK_PHONE.TRANSITION_IN:
-            task_phone_step_state_transition_in();
+        case E_STATES_TASK_PARENT.TRANSITION_IN:
+            task_parent_step_state_transition_in();
             break;
-        case E_STATES_TASK_PHONE.MINIGAME:
+        case E_STATES_TASK_PARENT.MINIGAME:
             task_phone_step_state_minigame();
             break;
     }
 }
 
-function task_phone_step_state_transition_in() {
-    state_tick += (1 / room_speed);
-    state_tick_alpha = state_tick / state_tick_maximum;
-    if (state_tick >= state_tick_maximum) {
-        state_current = E_STATES_TASK_PHONE.MINIGAME;
-        state_tick = 0;
-    }
-}
+
 function task_phone_step_state_minigame() {
     if (dialogue_char_index < string_length(dialogue_incoming)) {
         var _character_current = string_char_at(dialogue_incoming, dialogue_char_index);
@@ -115,23 +89,14 @@ function task_phone_step_state_minigame() {
 }
 
 function task_phone_draw() {
-    task_phone_draw_background();
-    task_phone_draw_phone();
+    task_parent_draw_background();
+    task_parent_draw_object();
+    task_parent_draw_title();
     task_phone_draw_text();
     task_phone_draw_response_options();
 }
-function task_phone_draw_background() {
-    var _background_alpha = lerp(0, 0.6, state_tick_alpha);
-    draw_set_alpha(_background_alpha);
-    draw_set_colour(c_black);
-    draw_rectangle(0, 0, room_width, room_height, false);
-    draw_set_alpha(1);
-}
-function task_phone_draw_phone() {
-    var _phone_x = lerp(phone_begin_x, phone_target_x, state_tick_alpha);
-    var _phone_y = lerp(phone_begin_y, phone_target_y, state_tick_alpha);
-    draw_sprite(sPhone, 0, _phone_x, _phone_y);
-}
+
+
 function task_phone_draw_text() {
     var _box_outline_width = 2;
     draw_set_font(fntPhoneDialogue);
@@ -159,7 +124,7 @@ function task_phone_draw_text() {
         dialogue_incoming_text_x, 
         dialogue_incoming_text_y, 
         dialogue_incoming_string_current,
-        1.0, 0.5, c_white, c_dkgray, 1
+        1.0, 0.5, 1.0, c_white, c_dkgray, 1
     );
 }
 function task_phone_draw_response_options() {
@@ -204,7 +169,7 @@ function task_phone_get_dialogue_speed(_character_current) {
         case ".":
         case "!":
         case "?":
-            return 0.25;
+            return 0.1;
         case ",":
             return 0.35;
         case " ":
@@ -219,17 +184,14 @@ function task_phone_get_conversation(_difficulty_weight=1.0) {
 }
 
 function task_phone_select_response(_response_index) {
-    if (dialogue_response_options == undefined || _response_index < 0 || _response_index >= array_length(dialogue_response_options)) {
-        show_debug_message("Invalid response index: " + string(_response_index));
-        return;
-    }
+    if (dialogue_response_options == undefined) return;
+	if (_response_index < 0) return;
+	if (_response_index >= array_length(dialogue_response_options)) return;
 
     audio_play_sound(sndPhoneEnd, 1, false);
     instance_destroy();
 }
 
 function task_phone_minigame_entry() {
-	if (instance_exists(TaskParent)) return;
-	
-	instance_create_layer(0, 0, "Minigames", TaskPhone);
+	task_parent_minigame_entry(TaskPhone);
 }
