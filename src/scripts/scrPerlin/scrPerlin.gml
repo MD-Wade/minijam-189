@@ -170,9 +170,9 @@ function draw_text_perlin(_x, _y, _text, _noise_scale, _noise_magnitude, _noise_
             _char_id++;
             var _char = string_char_at(_current_line, j);
 
-            var _nx = noise_range(_time + _char_id, _noise_scale, -1, 1);
-            var _ny = noise_range(_time + _char_id + 1000, _noise_scale, -1, 1);
-            
+            var _nx = noise_range(_time + _char_id * 0.1, _noise_scale, -1, 1);
+            var _ny = noise_range(_time + _char_id * 0.1 + 1000, _noise_scale, -1, 1);
+
             var _final_x = _cursor_x + _nx * _noise_magnitude;
             var _final_y = _cursor_y + _ny * _noise_magnitude;
 

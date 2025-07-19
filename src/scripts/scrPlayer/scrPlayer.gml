@@ -50,7 +50,6 @@ function player_init_state() {
 
 function player_step() {
     player_depth_update();
-    player_camera_modulate();
 
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:

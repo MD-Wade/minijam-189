@@ -68,7 +68,10 @@ function task_parent_draw_title() {
     draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
     draw_set_valign(fa_bottom);
     draw_set_halign(fa_right);
-    draw_text_perlin(title_text_x, title_text_y, title_text, 2.0, 0.25, c_white, c_dkgray, 1);
+    draw_text_perlin(title_text_x, title_text_y, title_text, 2.0, 0.7, 1.0, c_white, c_dkgray, 1);
+
+    draw_set_alpha(1.0);
+    draw_set_colour(c_white);
 }
 
 function task_parent_state_set(_current_state) {
