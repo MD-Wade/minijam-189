@@ -8,7 +8,7 @@
     "TileSerialiseData":[],
   },
   "name":"tsObjects",
-  "out_columns":12,
+  "out_columns":10,
   "out_tilehborder":2,
   "out_tilevborder":2,
   "parent":{
@@ -28,7 +28,7 @@
   },
   "tileAnimationFrames":[],
   "tileAnimationSpeed":15.0,
-  "tileHeight":48,
+  "tileHeight":32,
   "tilehsep":0,
   "tilevsep":0,
   "tileWidth":32,
