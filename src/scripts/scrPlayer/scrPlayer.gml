@@ -58,7 +58,7 @@ function player_init_run() {
     run_sound_index = 0;
     run_sound_instance_last = -1;
     run_tick = 0;
-    run_tick_maximum = 0.35;
+    run_tick_maximum = 0.2;
 }
 function player_init_state() {
     state_current = E_STATES_PLAYER.IDLE;
