@@ -15,6 +15,7 @@ function npc_init() {
     npc_init_target();
     npc_init_run();
     npc_init_dawdle();
+    npc_init_audio_emitter();
 }
 function npc_init_state() {
     state_current = E_STATES_NPC.WALK_TO_TARGET;
@@ -56,9 +57,14 @@ function npc_init_run() {
     run_tick = 0;
     run_tick_maximum = 0.42;
 }
+function npc_init_audio_emitter() {
+    audio_emitter = audio_emitter_create();
+    audio_emitter_falloff(audio_emitter, 32, 240, 1.0);
+}
 
 function npc_step() {
     npc_depth_update();
+    npc_audio_emitter_update();
 
     switch (state_current) {
         case E_STATES_NPC.WALK_TO_TARGET:
@@ -189,9 +195,10 @@ function npc_run_sound_stop() {
 function npc_run_sound_play() {
     npc_run_sound_stop();
     run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
-    run_sound_instance_last = audio_play_sound(run_sound_array[run_sound_index], 0, false);
-    audio_sound_pitch(run_sound_instance_last, 0.92);
-    audio_sound_gain(run_sound_instance_last, 0.65, 0);
+    
+    run_sound_instance_last = audio_play_sound_on(
+        audio_emitter, run_sound_array[run_sound_index],
+        false, 1, 0.92, 0, 0.65);
 }
 function npc_run_tick_target() {
     run_tick = 0;
@@ -217,4 +224,9 @@ function npc_get_free_space() {
         x: _desired_x,
         y: _desired_y
     }
+}
+function npc_audio_emitter_update() {
+    audio_emitter_position(
+        audio_emitter, x, 0, y
+    );
 }

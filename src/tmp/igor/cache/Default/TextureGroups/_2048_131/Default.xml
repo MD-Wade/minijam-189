@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureGroup>
   <texture scale="1" mipsToGenerate="0" texwidth="2048" texheight="2048">default_0.bz2</texture>
-  <texture scale="1" mipsToGenerate="0" texwidth="64" texheight="64">default_1.bz2</texture>
+  <texture scale="1" mipsToGenerate="0" texwidth="256" texheight="256">default_1.bz2</texture>
   <tpe x="2" y="2" tpage="default_0.bz2">fntTaskTitle_Mini Jam 189_fntTaskTitle.tpe</tpe>
   <tpe x="2" y="518" tpage="default_0.bz2">fntHud_Mini Jam 189_fntHud.tpe</tpe>
   <tpe x="2" y="1034" tpage="default_0.bz2">fntPhoneResponse_Mini Jam 189_fntPhoneResponse.tpe</tpe>
@@ -10,11 +10,11 @@
   <tpe x="518" y="518" tpage="default_0.bz2">fntPhoneDialogue_Mini Jam 189_fntPhoneDialogue.tpe</tpe>
   <tpe x="520" y="780" tpage="default_0.bz2">tsObjects_Mini Jam 189_output_tileset.tpe</tpe>
   <tpe x="518" y="1146" tpage="default_0.bz2">sTaskObjectPhone_Mini Jam 189_e835c4b4-98c6-4740-b0f5-71c8ecef50c4.tpe</tpe>
+  <tpe x="0" y="0" tpage="default_1.bz2">_filter_underwater_noise_sprite__filter_underwater_65d62f09-8194-4115-9cc4-ad2fdfff9926.tpe</tpe>
   <tpe x="722" y="1146" tpage="default_0.bz2">sTaskObjectFaxPile_Mini Jam 189_1a33c74d-abf0-4b00-a158-f00faf6912c3.tpe</tpe>
   <tpe x="722" y="1321" tpage="default_0.bz2">sTaskObjectFaxMachine_Mini Jam 189_ab0352dc-e29b-4b28-a801-04c883160d2a.tpe</tpe>
   <tpe x="1034" y="2" tpage="default_0.bz2">sTileObjects_Mini Jam 189_e6cf2363-c586-4035-826b-ae99ea668d92.tpe</tpe>
   <tpe x="1034" y="102" tpage="default_0.bz2">sTileBackground_Mini Jam 189_ceae5686-3bbb-4e8c-940c-99ffcf3861e5.tpe</tpe>
-  <tpe x="0" y="0" tpage="default_1.bz2">_filter_heathaze_noise_sprite__filter_heathaze_fab77ece-6875-44ac-acbc-5d217a1d8340.tpe</tpe>
   <tpe x="1034" y="202" tpage="default_0.bz2">sNode_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
   <tpe x="1034" y="238" tpage="default_0.bz2">sNodeNpc_Mini Jam 189_2a3ddb1e-159b-4143-b40b-d7e89516972d.tpe</tpe>
   <tpe x="1034" y="274" tpage="default_0.bz2">sSolid_Mini Jam 189_36d5d4c8-334e-4647-adcf-71e46526c856.tpe</tpe>

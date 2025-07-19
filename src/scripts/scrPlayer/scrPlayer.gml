@@ -26,6 +26,9 @@ function PromptTab(_button_label, _description_label) constructor {
     }
 }
 
+#macro LISTENER_HEIGHT 64  // How high the "ears" are above the ground plane.
+#macro LISTENER_SETBACK 32 // How far "behind" the player the ears are.
+
 function player_init() {
     player_init_node();
     player_init_pathfinding();
@@ -33,6 +36,7 @@ function player_init() {
     player_init_state();
     player_init_performance();
     player_init_prompts();
+    player_init_audio_listener();
     player_prompt_set_active(0);
 }
 function player_init_node() {
@@ -59,6 +63,19 @@ function player_init_run() {
     run_sound_instance_last = -1;
     run_tick = 0;
     run_tick_maximum = 0.2;
+}
+function player_init_audio_listener() {
+    audio_falloff_set_model(audio_falloff_inverse_distance_clamped);
+
+    audio_listener_set_orientation(
+        0, 0, 0, -1, 0, -1, 0
+    );
+    audio_listener_set_position(
+        0, room_width / 2, room_height / 2, 0
+    );
+    
+    audio_emitter = audio_emitter_create();
+    audio_emitter_falloff(audio_emitter, 48, 320, 1.0);
 }
 function player_init_state() {
     state_current = E_STATES_PLAYER.IDLE;
@@ -106,6 +123,7 @@ function player_init_performance() {
 
 function player_step() {
     player_depth_update();
+    player_audio_emitter_update();
 
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:
@@ -268,7 +286,9 @@ function player_run_sound_stop() {
 function player_run_sound_play() {
     player_run_sound_stop();
     run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
-    run_sound_instance_last = audio_play_sound(run_sound_array[run_sound_index], 0, false);
+    run_sound_instance_last = audio_play_sound_on(
+        audio_emitter, run_sound_array[run_sound_index],
+        false, 1);
 }
 function player_run_tick_target() {
     run_tick = 0;
@@ -305,6 +325,47 @@ function player_prompt_set_active(_prompt_index_active) {
 function player_camera_modulate() {
     var _view_angle = wave(-1, 1, 20, 0);
     camera_set_view_angle(view_camera[0], _view_angle);
+}
+function player_audio_emitter_update() {
+    // 1. GET CAMERA PROPERTIES
+    var _cam = view_camera[0];
+    var _cam_x = camera_get_view_x(_cam);
+    var _cam_y = camera_get_view_y(_cam);
+    var _cam_width = camera_get_view_width(_cam);
+    var _cam_height = camera_get_view_height(_cam);
+
+    // 2. CALCULATE CAMERA CENTER
+    var _cam_center_x = _cam_x + (_cam_width / 2);
+    var _cam_center_y = _cam_y + (_cam_height / 2);
+
+    // 3. SET LISTENER POSITION
+    // The listener is positioned relative to the camera's center.
+    var _listener_x = _cam_center_x;
+    var _listener_y = LISTENER_HEIGHT;
+    var _listener_z = _cam_center_y - LISTENER_SETBACK;
+
+    audio_listener_set_position(0, _listener_x, _listener_y, _listener_z);
+
+    // 4. SET LISTENER ORIENTATION
+    // The listener looks from its high position down at the center of the view.
+    var _look_target_x = _cam_center_x;
+    var _look_target_y = 0; // Target is on the "ground".
+    var _look_target_z = _cam_center_y;
+
+    var _look_vec_x = _look_target_x - _listener_x; // = 0
+    var _look_vec_y = _look_target_y - _listener_y; // = -LISTENER_HEIGHT
+    var _look_vec_z = _look_target_z - _listener_z; // = LISTENER_SETBACK
+
+    // The "up" vector should be (0, 1, 0) for a level head.
+    // Using -1 for Y would mean the listener is upside down.
+    var _up_vec_x = 0;
+    var _up_vec_y = -1;
+    var _up_vec_z = 0;
+
+    audio_listener_set_orientation(0, _look_vec_x, _look_vec_y, _look_vec_z, _up_vec_x, _up_vec_y, _up_vec_z);
+    audio_emitter_position(
+        audio_emitter, x, 0, y
+    );
 }
 
 function player_get_node_index_from_input(_input) {
