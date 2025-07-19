@@ -37,6 +37,7 @@
   "resources":[
     {"id":{"name":"fntPhoneDialogue","path":"fonts/fntPhoneDialogue/fntPhoneDialogue.yy",},},
     {"id":{"name":"fntPhoneResponse","path":"fonts/fntPhoneResponse/fntPhoneResponse.yy",},},
+    {"id":{"name":"SoundCredits","path":"notes/SoundCredits/SoundCredits.yy",},},
     {"id":{"name":"Controller","path":"objects/Controller/Controller.yy",},},
     {"id":{"name":"MusicController","path":"objects/MusicController/MusicController.yy",},},
     {"id":{"name":"Node","path":"objects/Node/Node.yy",},},
@@ -54,6 +55,8 @@
     {"id":{"name":"scrTaskPhone","path":"scripts/scrTaskPhone/scrTaskPhone.yy",},},
     {"id":{"name":"shdPerlin","path":"shaders/shdPerlin/shdPerlin.yy",},},
     {"id":{"name":"bgmMain","path":"sounds/bgmMain/bgmMain.yy",},},
+    {"id":{"name":"sndPhoneBegin","path":"sounds/sndPhoneBegin/sndPhoneBegin.yy",},},
+    {"id":{"name":"sndPhoneEnd","path":"sounds/sndPhoneEnd/sndPhoneEnd.yy",},},
     {"id":{"name":"sndPlayerRun1","path":"sounds/sndPlayerRun1/sndPlayerRun1.yy",},},
     {"id":{"name":"sndPlayerRun2","path":"sounds/sndPlayerRun2/sndPlayerRun2.yy",},},
     {"id":{"name":"sNode","path":"sprites/sNode/sNode.yy",},},
