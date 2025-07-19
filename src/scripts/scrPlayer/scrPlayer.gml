@@ -26,13 +26,7 @@ function player_init_node() {
     node_count_total = struct_names_count(node_map);
 }
 function player_init_pathfinding() {
-    var _grid_cell_width = 32;
-    var _grid_cell_height = 24;
-    var _grid_width = room_width div _grid_cell_width;
-    var _grid_height = room_height div _grid_cell_height;
-    pathfinding_grid = mp_grid_create(0, 0, _grid_width, _grid_height, _grid_cell_width, _grid_cell_height);
     pathfinding_path = path_add();
-    mp_grid_add_instances(pathfinding_grid, Wall, true);
 }
 function player_init_run() {
     run_sound_array = [sndPlayerRun1, sndPlayerRun2];
@@ -93,7 +87,7 @@ function player_node_move(_node_instance) {
     node_current_instance = noone;
     node_target_instance = _node_instance;
     player_state_set(E_STATES_PLAYER.MOVING);
-    mp_grid_path(pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, false);
+    mp_grid_path(global.pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, true);
     path_start(pathfinding_path, node_movement_speed, path_action_stop, false);
 }
 function player_depth_update() {
@@ -111,7 +105,8 @@ function player_run() {
         player_run_end();
     }
 
-    run_tick += (1 / room_speed);
+    var _gamespeed_fps = game_get_speed(gamespeed_fps);
+    run_tick += (1 / _gamespeed_fps);
     if (run_tick >= run_tick_maximum) {
         player_run_tick_target();
     }

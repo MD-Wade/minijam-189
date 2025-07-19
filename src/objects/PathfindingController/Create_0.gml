@@ -1,0 +1,1 @@
+pathfinding_controller_init();
