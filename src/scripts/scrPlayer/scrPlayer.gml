@@ -9,8 +9,9 @@ enum E_STATES_PROMPT_TAB {
 
 }
 
-function PromptTab(_label) constructor {
-    self.label = _label;
+function PromptTab(_button_label, _description_label) constructor {
+    self.button_label = _button_label;
+    self.description_label = _description_label;
     self.state = E_STATES_PROMPT_TAB.IDLE;
     self.alert_count = 0;
     self.width_current = 0;
@@ -67,10 +68,17 @@ function player_init_state() {
 }
 function player_init_prompts() {
     prompt_tabs = [];
+    var _task_labels = [
+        "PUTER",
+        "FX. PILE",
+        "PHONE",
+        "FX.MCHNE",
+        "COOKIES",
+    ]
     for (var _prompt_index = 0; _prompt_index < node_count_total; _prompt_index ++) {
         var _prompt_label = string(_prompt_index + 1);
         var _prompt_node = node_map[$ _prompt_label];
-        array_push(prompt_tabs, new PromptTab(_prompt_label));
+        array_push(prompt_tabs, new PromptTab(_prompt_label, _task_labels[_prompt_index]));
     }
 
     var _border = 4;
@@ -81,14 +89,14 @@ function player_init_prompts() {
     prompt_tabs_end_x = 0;
     prompt_tabs_end_y = (prompt_tabs_begin_y + (prompt_tab_height * node_count_total));
 
-    prompt_length_base = 16;
-    prompt_length_alert = 80;
+    prompt_length_base = 72;
+    prompt_length_alert = 88;
     prompt_length_mod_min = 0.94;
     prompt_length_mod_max = 1.10;
 }
 function player_init_performance() {
     performance_value = 100;
-    var _performance_bar_width = 64;
+    var _performance_bar_width = 72;
     var _performance_bar_height = 16;
     performance_bar_x1 = 0;
     performance_bar_y1 = 0;
@@ -125,7 +133,6 @@ function player_draw_end() {
 function player_draw_prompt_tabs() {
     var _prompt_tab_x = prompt_tabs_begin_x;
     var _prompt_tab_y = prompt_tabs_begin_y;
-    draw_set_font(fntHud);
     for (var _prompt_index = 0; _prompt_index < array_length(prompt_tabs); _prompt_index ++) {
         var _prompt_tab = prompt_tabs[_prompt_index];
         player_draw_prompt_tab(_prompt_tab_x, _prompt_tab_y, _prompt_index);
@@ -160,14 +167,23 @@ function player_draw_prompt_tab(_x, _y, _prompt_tab_index) {
             break;
     }
 
+    draw_set_font(fntHud);
     draw_set_halign(fa_right);
     draw_set_valign(fa_middle);
     draw_text_perlin(
         _bbox_right - _border_size,
         mean(_bbox_top, _bbox_bottom),
-        _prompt_tab.label,
-        1.0, 0.5, 1.0, c_white, c_dkgray, 1.0, _prompt_tab_index * 128
+        _prompt_tab.button_label,
+        1.0, 0.5, 1.0, c_white, c_dkgray, 1.0, _prompt_tab_index * 32
     )
+
+    draw_set_font(fntHudSmall);
+    draw_text_perlin(
+        _bbox_right - _border_size - 16,
+        mean(_bbox_top, _bbox_bottom),
+        _prompt_tab.description_label,
+        1.0, 0.5, 1.0, c_white, c_dkgray, 0.5, _prompt_tab_index * 64
+    );
 }
 function player_draw_performance_bar() {
     var _outline_width = 2;
