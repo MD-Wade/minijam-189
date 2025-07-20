@@ -29,7 +29,7 @@ function task_phone_init() {
     audio_play_sound(sndPhoneBegin, 1, false);
 }
 function task_phone_init_text() {
-    dialogue_incoming_box_x1 = (8);
+    dialogue_incoming_box_x1 = (80);
     dialogue_incoming_box_x2 = (room_width - 192);
     dialogue_incoming_box_y1 = (8);
     dialogue_incoming_box_y2 = (92);
@@ -46,7 +46,7 @@ function task_phone_init_text() {
 }
 function task_phone_init_conversation() {
     conversation = task_phone_get_conversation(1.0);
-    dialogue_incoming = conversation.dialogue_incoming;
+    dialogue_incoming = auto_line_break(conversation.dialogue_incoming, dialogue_box_width / 2);
     dialogue_response_options = conversation.response_options;
 }
 
@@ -120,6 +120,7 @@ function task_phone_draw_text() {
     draw_set_halign(fa_left);
     draw_set_valign(fa_top);
     draw_set_colour(c_white);
+
     draw_text_perlin(
         dialogue_incoming_text_x, 
         dialogue_incoming_text_y, 
@@ -129,7 +130,7 @@ function task_phone_draw_text() {
 }
 function task_phone_draw_response_options() {
     // --- Layout Variables ---
-    var _response_box_start_x = dialogue_incoming_box_x1 + 48;
+    var _response_box_start_x = dialogue_incoming_box_x1;
     var _response_box_start_y = room_height - 128;
     var _response_box_width = dialogue_incoming_box_x2 - _response_box_start_x - 16;
     var _response_box_height = 32;

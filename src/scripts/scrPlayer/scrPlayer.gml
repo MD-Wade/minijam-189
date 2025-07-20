@@ -37,6 +37,7 @@ function player_init() {
     player_init_performance();
     player_init_prompts();
     player_init_audio_listener();
+    player_init_fax_pile();
     player_prompt_set_active(0);
 }
 function player_init_node() {
@@ -106,8 +107,8 @@ function player_init_prompts() {
     prompt_tabs_end_x = 0;
     prompt_tabs_end_y = (prompt_tabs_begin_y + (prompt_tab_height * node_count_total));
 
-    prompt_length_base = 72;
-    prompt_length_alert = 88;
+    prompt_length_base = 16;
+    prompt_length_alert = 32;
     prompt_length_mod_min = 0.94;
     prompt_length_mod_max = 1.10;
 }
@@ -119,6 +120,9 @@ function player_init_performance() {
     performance_bar_y1 = 0;
     performance_bar_x2 = performance_bar_x1 + _performance_bar_width;
     performance_bar_y2 = performance_bar_y1 + _performance_bar_height;
+}
+function player_init_fax_pile() {
+    global.fax_pile_count = 0;
 }
 
 function player_step() {
@@ -181,7 +185,7 @@ function player_draw_prompt_tab(_x, _y, _prompt_tab_index) {
             _prompt_tab.colour_desired = c_black;
             break;
         case E_STATES_PROMPT_TAB.ACTIVE:
-            _prompt_tab.colour_desired = merge_colour(c_aqua, c_white, 0.4);
+            _prompt_tab.colour_desired = merge_colour(c_navy, c_ltgray, 0.6);
             break;
     }
 
@@ -313,12 +317,10 @@ function player_prompt_set_active(_prompt_index_active) {
         var _prompt_tab = prompt_tabs[_prompt_index_iteration];
         if (_prompt_tab.state == E_STATES_PROMPT_TAB.ACTIVE) {
             _prompt_tab.state = E_STATES_PROMPT_TAB.IDLE;
-            show_debug_message("Deactivating prompt tab: " + string(_prompt_index_iteration));
         }
 
         if (_prompt_index_iteration == _prompt_index_active) {
             _prompt_tab.state = E_STATES_PROMPT_TAB.ACTIVE;
-            show_debug_message("Activating prompt tab: " + string(_prompt_index_iteration));
         }
     }
 }

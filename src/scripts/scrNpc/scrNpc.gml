@@ -91,6 +91,7 @@ function npc_step_state_action() {
     state_tick += (1 / _gamespeed_fps);
     if (state_tick >= state_tick_maximum) {
         npc_state_set(E_STATES_NPC.EXIT);
+        npc_action_complete();
         node_pathfind_to_exit();
     }
 }
@@ -197,8 +198,14 @@ function npc_run_sound_play() {
     run_sound_index = (run_sound_index + 1) mod array_length(run_sound_array);
     
     run_sound_instance_last = audio_play_sound_on(
-        audio_emitter, run_sound_array[run_sound_index],
-        false, 1, 0.92, 0, 0.65);
+        audio_emitter, 
+        run_sound_array[run_sound_index],
+        false, 
+        1, 
+        0.92, 
+        0, 
+        0.65
+    );
 }
 function npc_run_tick_target() {
     run_tick = 0;
@@ -229,4 +236,11 @@ function npc_audio_emitter_update() {
     audio_emitter_position(
         audio_emitter, x, 0, y
     );
+}
+function npc_action_complete() {
+    switch (node_target_type) {
+        case E_NPC_TARGETS.FAX_PILE:
+            global.fax_pile_count += 1;
+            break;
+    }
 }

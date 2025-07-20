@@ -15,8 +15,8 @@ function npc_controller_init_state() {
     state_tick_maximum = random_range(spawn_time_minimum, spawn_time_maximum);
 }
 function npc_controller_init_spawn() {
-    spawn_time_minimum = 0.5;
-    spawn_time_maximum = 12.5;
+    spawn_time_minimum = 0.25;
+    spawn_time_maximum = 2.5;
 }
 function npc_controller_init_nodes() {
     global.node_fax_pile = Node2;
@@ -75,7 +75,6 @@ function npc_controller_spawn_npc() {
     } until (_exit_node_index != _spawn_node_index);
 
     var _exit_node = global.nodes_npcs[_exit_node_index];
-    show_debug_message("Spawning NPC at " + string(_spawn_node.x) + ", " + string(_spawn_node.y) + " with exit at " + string(_exit_node.x) + ", " + string(_exit_node.y));
     var _npc_instance = instance_create_layer(_spawn_node.x, _spawn_node.y, "WorldObjects", Npc, {
         node_exit: _exit_node,
         node_spawn: _spawn_node
