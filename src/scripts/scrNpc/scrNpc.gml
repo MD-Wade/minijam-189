@@ -16,6 +16,7 @@ function npc_init() {
     npc_init_run();
     npc_init_dawdle();
     npc_init_audio_emitter();
+    npc_init_variant();
 }
 function npc_init_state() {
     state_current = E_STATES_NPC.WALK_TO_TARGET;
@@ -25,7 +26,7 @@ function npc_init_state() {
 }
 function npc_init_pathfinding() {
     pathfinding_path = path_add();
-    pathfinding_speed = 2.8;
+    pathfinding_speed = 1.8;
 }
 function npc_init_target() {
     var _probability_fax = 40;                                          // 40% Chance of going to Fax Pile
@@ -56,10 +57,15 @@ function npc_init_run() {
     run_sound_instance_last = -1;
     run_tick = 0;
     run_tick_maximum = 0.42;
+    run_previous_x = x;
 }
 function npc_init_audio_emitter() {
     audio_emitter = audio_emitter_create();
     audio_emitter_falloff(audio_emitter, 32, 240, 1.0);
+}
+function npc_init_variant() {
+    image_speed = 0;
+    image_index = irandom(image_number - 1);
 }
 
 function npc_step() {
@@ -164,11 +170,17 @@ function npc_run() {
     if (path_index == -1) {
         player_run_end();
     }
+    
+    var _direction_current = sign(x - run_previous_x);
+    if (_direction_current != 0) {
+        image_xscale = _direction_current;
+    }
+    run_previous_x = x;
 
     var _gamespeed_fps = game_get_speed(gamespeed_fps);
     run_tick += (1 / _gamespeed_fps);
     if (run_tick >= run_tick_maximum) {
-        npc_run_tick_target();
+        player_run_tick_target();
     }
 }
 function npc_run_end() {

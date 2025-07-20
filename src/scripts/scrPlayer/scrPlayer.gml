@@ -64,6 +64,7 @@ function player_init_run() {
     run_sound_instance_last = -1;
     run_tick = 0;
     run_tick_maximum = 0.2;
+    run_previous_x = x;
 }
 function player_init_audio_listener() {
     audio_falloff_set_model(audio_falloff_inverse_distance_clamped);
@@ -266,6 +267,12 @@ function player_run() {
     if (path_index == -1) {
         player_run_end();
     }
+
+    var _direction_current = sign(x - run_previous_x);
+    if (_direction_current != 0) {
+        image_xscale = _direction_current;
+    }
+    run_previous_x = x;
 
     var _gamespeed_fps = game_get_speed(gamespeed_fps);
     run_tick += (1 / _gamespeed_fps);
