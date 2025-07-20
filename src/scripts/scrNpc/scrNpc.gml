@@ -111,6 +111,17 @@ function npc_step_state_exit() {
 }
 
 function npc_draw() {
+	draw_set_colour(c_black);
+	draw_set_alpha(0.25);
+	
+	var _shadow_x1 = (x - 12);
+	var _shadow_y1 = (y + 6);
+	var _shadow_x2 = (x + 12);
+	var _shadow_y2 = (y + 10);
+	
+	draw_ellipse(_shadow_x1, _shadow_y1, _shadow_x2, _shadow_y2, false);
+	draw_set_colour(c_white);
+	draw_set_alpha(1.0);
     draw_self();
 }
 
@@ -118,6 +129,10 @@ function npc_cleanup() {
     if (not is_undefined(pathfinding_path)) {
         path_delete(pathfinding_path);
         pathfinding_path = undefined;
+    }
+    if (not is_undefined(audio_emitter)) {
+        audio_emitter_free(audio_emitter);
+        audio_emitter = undefined;
     }
 }
 
@@ -141,15 +156,19 @@ function node_pathfind_to_target() {
             break;
     }
 
-    mp_grid_path(
-        global.pathfinding_grid,
-        pathfinding_path,
-        x,
-        y,
-        _target_x,
-        _target_y,
-        true
-    );
+    var _pathfinding_result = false;
+    do {
+        var _destination_x = _target_x + irandom_range(-16, 16);
+        var _destination_y = _target_y + irandom_range(-16, 16);
+
+        _pathfinding_result = mp_grid_path(
+            global.pathfinding_grid,
+            pathfinding_path,
+            x, y,
+            _destination_x, _destination_y,
+            true);
+        
+    } until (_pathfinding_result);
     path_start(pathfinding_path, pathfinding_speed, path_action_stop, false);
 }
 function node_pathfind_to_exit() {

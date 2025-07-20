@@ -1,3 +1,3 @@
 event_inherited();
 
-depth -= 16;
+depth = -y;

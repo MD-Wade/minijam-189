@@ -165,6 +165,17 @@ function player_step() {
 }
 
 function player_draw() {
+	draw_set_colour(c_black);
+	draw_set_alpha(0.25);
+	
+	var _shadow_x1 = (x - 12);
+	var _shadow_y1 = (y + 6);
+	var _shadow_x2 = (x + 12);
+	var _shadow_y2 = (y + 10);
+	
+	draw_ellipse(_shadow_x1, _shadow_y1, _shadow_x2, _shadow_y2, false);
+	draw_set_colour(c_white);
+	draw_set_alpha(1.0);
     draw_self();
 }
 function player_draw_end() {
