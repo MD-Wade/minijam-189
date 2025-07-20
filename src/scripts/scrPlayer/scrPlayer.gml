@@ -8,6 +8,11 @@ enum E_STATES_PROMPT_TAB {
     ACTIVE,
 
 }
+enum E_STATES_PLAGER_AGE {
+    YOUNG,
+    MID,
+    GEEZER
+}
 
 function PromptTab(_button_label, _description_label) constructor {
     self.button_label = _button_label;
@@ -38,6 +43,8 @@ function player_init() {
     player_init_prompts();
     player_init_audio_listener();
     player_init_fax_pile();
+    player_init_age();
+    player_init_animation();
     player_prompt_set_active(0);
 }
 function player_init_node() {
@@ -124,6 +131,17 @@ function player_init_performance() {
 }
 function player_init_fax_pile() {
     global.fax_pile_count = 0;
+}
+function player_init_age() {
+    age_current = E_STATES_PLAGER_AGE.YOUNG;
+}
+function player_init_animation() {
+    image_speed = 0;
+    sprite_array[E_STATES_PLAGER_AGE.YOUNG] = sPlayerYoung;
+    sprite_array[E_STATES_PLAGER_AGE.MID] = sPlayerMid;
+    sprite_array[E_STATES_PLAGER_AGE.GEEZER] = sPlayerGeezer;
+    sprite_index = sprite_array[E_STATES_PLAGER_AGE.YOUNG];
+    image_index = 0;
 }
 
 function player_step() {

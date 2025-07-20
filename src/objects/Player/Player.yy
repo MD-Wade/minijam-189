@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sPlayer",
-    "path":"sprites/sPlayer/sPlayer.yy",
+    "name":"sPlayerYoung",
+    "path":"sprites/sPlayerYoung/sPlayerYoung.yy",
   },
   "spriteMaskId":null,
   "visible":true,

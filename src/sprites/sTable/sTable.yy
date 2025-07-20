@@ -23,7 +23,7 @@
   ],
   "name":"sTable",
   "nineSlice":null,
-  "origin":7,
+  "origin":9,
   "parent":{
     "name":"Sprites",
     "path":"folders/Sprites.yy",
@@ -78,7 +78,7 @@
     "visibleRange":null,
     "volume":1.0,
     "xorigin":17,
-    "yorigin":32,
+    "yorigin":28,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

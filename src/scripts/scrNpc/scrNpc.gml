@@ -37,6 +37,7 @@ function npc_init_target() {
     if (irandom(100) < _probability_fax) {
         node_target_instance = global.node_fax_pile;
         node_target_type = E_NPC_TARGETS.FAX_PILE;
+        sprite_index = sNpcFax;
     } else if (irandom(100) < _probability_cookies) and (not _spawned_at_cookies) {
         node_target_instance = global.node_cookies;
         node_target_type = E_NPC_TARGETS.COOKIES;
@@ -253,6 +254,7 @@ function npc_action_complete() {
     switch (node_target_type) {
         case E_NPC_TARGETS.FAX_PILE:
             global.fax_pile_count += 1;
+            sprite_index = sNpc;
             break;
     }
 }
