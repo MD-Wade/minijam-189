@@ -272,7 +272,7 @@ function npc_audio_emitter_update() {
 function npc_action_complete() {
     switch (node_target_type) {
         case E_NPC_TARGETS.FAX_PILE:
-            global.fax_pile_count += 1;
+            fax_pile_controller_add_order();
             sprite_index = sNpc;
             break;
     }

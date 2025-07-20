@@ -1,0 +1,1 @@
+fax_pile_controller_room_start();

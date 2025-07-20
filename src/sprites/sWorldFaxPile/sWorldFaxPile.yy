@@ -3,7 +3,7 @@
   "%Name":"sWorldFaxPile",
   "bboxMode":0,
   "bbox_bottom":31,
-  "bbox_left":1,
+  "bbox_left":0,
   "bbox_right":31,
   "bbox_top":0,
   "collisionKind":1,
@@ -16,6 +16,7 @@
     {"$GMSpriteFrame":"","%Name":"9eec693e-07d4-4580-9314-0eb4bc337b75","name":"9eec693e-07d4-4580-9314-0eb4bc337b75","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"fc92f624-d113-4a08-a81a-748146c3efdc","name":"fc92f624-d113-4a08-a81a-748146c3efdc","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
     {"$GMSpriteFrame":"","%Name":"f303e6a7-6272-4659-9464-565a0d84dcf6","name":"f303e6a7-6272-4659-9464-565a0d84dcf6","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"62ee06cb-1ac8-4807-a616-cc19467e098d","name":"62ee06cb-1ac8-4807-a616-cc19467e098d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
@@ -52,7 +53,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":4.0,
+    "length":5.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -85,6 +86,9 @@
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
                 "0":{"$SpriteFrameKeyframe":"","Id":{"name":"f303e6a7-6272-4659-9464-565a0d84dcf6","path":"sprites/sWorldFaxPile/sWorldFaxPile.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
               },"Disabled":false,"id":"306c3124-4071-42fe-9ceb-33ba78fd4fbb","IsCreationKey":false,"Key":3.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"62ee06cb-1ac8-4807-a616-cc19467e098d","path":"sprites/sWorldFaxPile/sWorldFaxPile.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"4320b94a-8d17-47bc-919a-ef1cb5a25c0d","IsCreationKey":false,"Key":4.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
