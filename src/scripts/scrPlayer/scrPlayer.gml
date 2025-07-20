@@ -165,7 +165,7 @@ function player_step() {
 }
 
 function player_draw() {
-    if keyboard_check(vk_space) mp_grid_draw(global.pathfinding_grid);
+    //if keyboard_check(vk_space) mp_grid_draw(global.pathfinding_grid);
 	draw_set_colour(c_black);
 	draw_set_alpha(0.25);
 	
@@ -272,7 +272,6 @@ function player_node_input_check() {
     }
 }
 function player_node_move(_node_instance) {
-    show_debug_message("Moving to node: " + string(_node_instance.node_input));
     var _node_index = player_get_node_index_from_input(_node_instance.node_input);
     player_prompt_set_active(_node_index);
     var _target_x = _node_instance.x;
@@ -366,27 +365,21 @@ function player_camera_modulate() {
     camera_set_view_angle(view_camera[0], _view_angle);
 }
 function player_audio_emitter_update() {
-    // 1. GET CAMERA PROPERTIES
     var _cam = view_camera[0];
     var _cam_x = camera_get_view_x(_cam);
     var _cam_y = camera_get_view_y(_cam);
     var _cam_width = camera_get_view_width(_cam);
     var _cam_height = camera_get_view_height(_cam);
 
-    // 2. CALCULATE CAMERA CENTER
     var _cam_center_x = _cam_x + (_cam_width / 2);
     var _cam_center_y = _cam_y + (_cam_height / 2);
 
-    // 3. SET LISTENER POSITION
-    // The listener is positioned relative to the camera's center.
     var _listener_x = _cam_center_x;
     var _listener_y = LISTENER_HEIGHT;
     var _listener_z = _cam_center_y - LISTENER_SETBACK;
 
     audio_listener_set_position(0, _listener_x, _listener_y, _listener_z);
 
-    // 4. SET LISTENER ORIENTATION
-    // The listener looks from its high position down at the center of the view.
     var _look_target_x = _cam_center_x;
     var _look_target_y = 0; // Target is on the "ground".
     var _look_target_z = _cam_center_y;
@@ -395,8 +388,6 @@ function player_audio_emitter_update() {
     var _look_vec_y = _look_target_y - _listener_y; // = -LISTENER_HEIGHT
     var _look_vec_z = _look_target_z - _listener_z; // = LISTENER_SETBACK
 
-    // The "up" vector should be (0, 1, 0) for a level head.
-    // Using -1 for Y would mean the listener is upside down.
     var _up_vec_x = 0;
     var _up_vec_y = -1;
     var _up_vec_z = 0;

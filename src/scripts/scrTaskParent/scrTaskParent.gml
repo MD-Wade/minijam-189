@@ -15,9 +15,10 @@ function task_parent_init_state() {
     state_tick_alpha = 0;
     state_tick_tween = 0;
 }
-function task_parent_init_title() {
+function task_parent_init_title(_right_side=false) {
     title_text = "ERROR";
-    title_text_x = (8);
+    title_mirrored = _right_side;
+    title_text_x = (title_mirrored ? (room_width - 8) : (8));
     title_text_y = (room_height - 8);
 }
 function task_parent_init_object(_object_sprite) {
@@ -59,16 +60,24 @@ function task_parent_draw_title() {
     var _text_width = string_width(title_text);
     var _text_height = string_height(title_text);
     var _bbox_border = 4;
-    var _bbox_top = title_text_y - _text_height - _bbox_border;
-    var _bbox_left = title_text_x - _bbox_border;
-    var _bbox_right = title_text_x + _text_width + _bbox_border;
-    var _bbox_bottom = title_text_y + _bbox_border;
 
     draw_set_alpha(state_tick_tween);
     draw_set_colour(c_black);
-    draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
     draw_set_valign(fa_bottom);
-    draw_set_halign(fa_left);
+    if (title_mirrored) {
+        var _bbox_left = title_text_x - _text_width - _bbox_border;
+        var _bbox_right = title_text_x + _bbox_border;
+        draw_set_halign(fa_right);
+    } else {
+        var _bbox_left = title_text_x - _bbox_border;
+        var _bbox_right = title_text_x + _text_width + _bbox_border;
+        draw_set_halign(fa_left);
+    }
+    var _bbox_top = title_text_y - _text_height - _bbox_border;
+    var _bbox_bottom = title_text_y + _bbox_border;
+
+    
+    draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
     draw_text_perlin(title_text_x, title_text_y, title_text, 2.0, 0.7, 1.0, c_white, c_dkgray, 1);
 
     draw_set_alpha(1.0);

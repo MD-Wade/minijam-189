@@ -39,6 +39,7 @@
   },
   "name":"Mini Jam 189",
   "resources":[
+    {"id":{"name":"fntFaxHeader","path":"fonts/fntFaxHeader/fntFaxHeader.yy",},},
     {"id":{"name":"fntHud","path":"fonts/fntHud/fntHud.yy",},},
     {"id":{"name":"fntHudSmall","path":"fonts/fntHudSmall/fntHudSmall.yy",},},
     {"id":{"name":"fntPhoneDialogue","path":"fonts/fntPhoneDialogue/fntPhoneDialogue.yy",},},
@@ -89,6 +90,9 @@
     {"id":{"name":"sndPhoneEnd","path":"sounds/sndPhoneEnd/sndPhoneEnd.yy",},},
     {"id":{"name":"sndPlayerRun1","path":"sounds/sndPlayerRun1/sndPlayerRun1.yy",},},
     {"id":{"name":"sndPlayerRun2","path":"sounds/sndPlayerRun2/sndPlayerRun2.yy",},},
+    {"id":{"name":"sndUiBack","path":"sounds/sndUiBack/sndUiBack.yy",},},
+    {"id":{"name":"sndUiConfirm","path":"sounds/sndUiConfirm/sndUiConfirm.yy",},},
+    {"id":{"name":"sndUiSelection","path":"sounds/sndUiSelection/sndUiSelection.yy",},},
     {"id":{"name":"sNode","path":"sprites/sNode/sNode.yy",},},
     {"id":{"name":"sNodeIndicator","path":"sprites/sNodeIndicator/sNodeIndicator.yy",},},
     {"id":{"name":"sNodeNpc","path":"sprites/sNodeNpc/sNodeNpc.yy",},},

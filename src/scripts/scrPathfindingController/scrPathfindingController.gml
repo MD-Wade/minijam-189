@@ -2,8 +2,8 @@ function pathfinding_controller_init() {
     global.pathfinding_grid = undefined;
 }
 function pathfinding_controller_init_room() {
-    var _grid_cell_width = 32;
-    var _grid_cell_height = 24;
+    var _grid_cell_width = 16;
+    var _grid_cell_height = 16;
     room_buffer_width = (_grid_cell_width * 16);
     room_buffer_height = (_grid_cell_height * 12);
     pathfinding_grid_width = (room_width + (room_buffer_width * 2)) div _grid_cell_width;

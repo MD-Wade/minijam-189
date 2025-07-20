@@ -1,7 +1,7 @@
 function FaxOrder() constructor {
-    self.fax_number = fax_pile_get_ten_digit_number();
     self.pages_count = irandom_range(global.fax_pile_page_count_min, global.fax_pile_page_count_max);
     self.pages_completed = 0;
+    self.fax_number = fax_pile_get_ten_digit_number();
     self.fax_title = fax_pile_get_random_title();
 }
 

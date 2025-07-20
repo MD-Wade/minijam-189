@@ -2,6 +2,7 @@ function task_fax_pile_init() {
     task_parent_init();
     task_parent_init_object(sTaskObjectFaxPile);
     task_fax_pile_init_dialogue();
+    task_fax_pile_init_orders();
 
     title_text = "FAX PILE";
 }
@@ -9,11 +10,18 @@ function task_fax_pile_init_dialogue() {
     dialogue_box_x1 = (80);
     dialogue_box_x2 = (room_width - 192);
     dialogue_box_y1 = (8);
-    dialogue_box_y2 = (92);
+    dialogue_box_y2 = (40);
     dialogue_text_x = (dialogue_box_x1 + 8);
     dialogue_text_y = (dialogue_box_y1 + 8);
     dialogue_box_width = (dialogue_box_x2 - dialogue_box_x1);
     dialogue_box_height = (dialogue_box_y2 - dialogue_box_y1);
+}
+function task_fax_pile_init_orders() {
+    order_selection = 0;
+    order_start_x = dialogue_box_x1;
+    order_start_y = dialogue_box_y2 + 24;
+    order_width = (dialogue_box_width + 128);
+    order_height = 24;
 }
 
 function task_fax_pile_step() {
@@ -22,18 +30,41 @@ function task_fax_pile_step() {
             task_parent_step_state_transition_in();
             break;
         case E_STATES_TASK_PARENT.MINIGAME:
-            if (keyboard_check_pressed(vk_escape)) {
-                show_debug_message("Escape pressed, exiting fax pile task.");
-                instance_destroy();
-            }
+            task_fax_pile_step_minigame();
             break;
+    }
+}
+function task_fax_pile_step_minigame() {
+    task_fax_pile_step_input();
+
+    if (keyboard_check_pressed(vk_escape)) {
+        show_debug_message("Escape pressed, exiting fax pile task.");
+        instance_destroy();
+    }
+}
+function task_fax_pile_step_input() {
+    if (keyboard_check_pressed(vk_up)) {
+        order_selection --;
+        audio_play_sound(sndUiSelection, 1, false);
+        if (order_selection < 0) {
+            order_selection = array_length(global.fax_pile_orders) - 1;
+        }
+    }
+
+    if (keyboard_check_pressed(vk_down)) {
+        order_selection ++;
+        audio_play_sound(sndUiBack, 1, false);
+        if (order_selection >= array_length(global.fax_pile_orders)) {
+            order_selection = 0;
+        }
     }
 }
 
 function task_fax_pile_draw() {
     task_parent_draw_background();
-    task_parent_draw_object();
+    //task_parent_draw_object();
     task_fax_pile_draw_text();
+    task_fax_pile_draw_orders();
     task_parent_draw_title();
 }
 function task_fax_pile_draw_text() {
@@ -60,9 +91,10 @@ function task_fax_pile_draw_text() {
     draw_set_valign(fa_top);
     draw_set_colour(c_white);
 
-    var _string_current = "THE FAX PILE CURRENTLY HOLDS " + string(global.fax_pile_count) + " FAXES.\nTAKE THEM?"
-    if (global.fax_pile_count <= 0) {
-        _string_current = "NO FAXES TO TAKE.";
+    var _string_current = "SELECT AN ORDER TO FAX.";
+    show_debug_message(global.fax_pile_orders);
+    if (array_length(global.fax_pile_orders) <= 0) {
+        _string_current = "NO ORDERS TO FAX.";
     }
 
     draw_text_perlin(
@@ -72,7 +104,46 @@ function task_fax_pile_draw_text() {
         1.0, 0.5, 1.0, c_white, c_dkgray, 1
     );
 }
+function task_fax_pile_draw_orders() {
+    var _order_count = array_length(global.fax_pile_orders);
+    var _order_x = order_start_x;
+    var _order_y = order_start_y;
 
+    if (_order_count <= 0) {
+        return;
+    }
+
+    draw_set_halign(fa_left);
+    draw_set_valign(fa_middle);
+    draw_set_font(fntPhoneResponse);
+    for (var _order_index = 0; _order_index < _order_count; _order_index ++) {
+        var _order_struct = global.fax_pile_orders[_order_index];
+        var _order_selected = (_order_index == order_selection);
+        var _order_text = _order_struct.fax_title + " | " + string(_order_struct.pages_count) + " pages | " + _order_struct.fax_number;
+
+        var _outline_width = 2;
+        var _bbox_top = _order_y;
+        var _bbox_left = _order_x;
+        var _bbox_right = _order_x + order_width;
+        var _bbox_bottom = _order_y + order_height;
+        var _text_x = _order_x + 8;
+        var _text_y = mean(_bbox_top, _bbox_bottom);
+
+        draw_set_colour(c_black);
+        draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
+        draw_set_colour(_order_selected ? c_yellow : c_white);
+        draw_rectangle(_bbox_left + _outline_width, 
+            _bbox_top + _outline_width, 
+            _bbox_right - _outline_width, 
+            _bbox_bottom - _outline_width, 
+            false);
+        draw_set_colour(c_white);
+        draw_text_perlin(_text_x, _text_y, _order_text, 2.0, 0.1, 4.0, c_ltgray, c_black, 1);
+
+        _order_y += order_height;
+    }
+
+}
 
 function task_fax_pile_minigame_entry() {
     task_parent_minigame_entry(TaskFaxPile);

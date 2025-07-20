@@ -253,10 +253,17 @@ function npc_run_tick_target() {
     }
 }
 function npc_get_free_space() {
+    var _maximum_attempt_count = 100;
     do {
         var _desired_x = irandom(room_width);
         var _desired_y = irandom(room_height);
-        var _desired_place_is_free = not place_meeting(_desired_x, _desired_y, WorldObject);
+        _maximum_attempt_count --;
+        if (_maximum_attempt_count <= 0) {
+            show_debug_message("Failed to find free space for NPC after " + _attempt_count + " attempts.");
+            instance_destroy();
+            return { x: _desired_x, y: _desired_y };
+        }
+        var _desired_place_is_free = not place_meeting(_desired_x, _desired_y, WorldObject) or (_maximum_attempt_count <= 0);
     } until (_desired_place_is_free);
     
     return {
