@@ -165,6 +165,7 @@ function player_step() {
 }
 
 function player_draw() {
+    if keyboard_check(vk_space) mp_grid_draw(global.pathfinding_grid);
 	draw_set_colour(c_black);
 	draw_set_alpha(0.25);
 	
