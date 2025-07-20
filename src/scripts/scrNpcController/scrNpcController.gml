@@ -7,6 +7,7 @@ enum E_STATES_NPC_CONTROLLER {
 function npc_controller_init() {
     npc_controller_init_spawn();
     npc_controller_init_state();
+    npc_controller_init_variants();
 }
 function npc_controller_init_state() {
     state_current = E_STATES_NPC_CONTROLLER.INACTIVE;
@@ -17,6 +18,20 @@ function npc_controller_init_state() {
 function npc_controller_init_spawn() {
     spawn_time_minimum = 0.25;
     spawn_time_maximum = 2.5;
+}
+function npc_controller_init_variants() {
+    npc_variant_sprites = [
+        sNpc1,
+        sNpc2,
+        sNpc3,
+        sNpc4,
+        sNpc5,
+        sNpc6,
+        sNpc7,
+        sNpc8,
+        sNpc9,
+        sNpc10,
+    ];
 }
 function npc_controller_init_nodes() {
     global.node_fax_pile = Node2;
@@ -79,10 +94,15 @@ function npc_controller_spawn_npc() {
         node_exit: _exit_node,
         node_spawn: _spawn_node
     });
+    _npc.sprite_index = npc_controller_get_variant_sprite();
 }
 
 function npc_controller_state_set(_state) {
     state_previous = state_current;
     state_current = _state;
     state_tick = 0;
+}
+function npc_controller_get_variant_sprite() {
+    var _variant_index = irandom(array_length(npc_variant_sprites) - 1);
+    return npc_variant_sprites[_variant_index];
 }
