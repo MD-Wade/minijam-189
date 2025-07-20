@@ -15,8 +15,8 @@ function npc_controller_init_state() {
     state_tick_maximum = random_range(spawn_time_minimum, spawn_time_maximum);
 }
 function npc_controller_init_spawn() {
-    spawn_time_minimum = 0.25;
-    spawn_time_maximum = 2.5;
+    spawn_time_minimum = 0.5;
+    spawn_time_maximum = 8.5;
 }
 function npc_controller_init_nodes() {
     global.node_fax_pile = Node2;

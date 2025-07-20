@@ -3,6 +3,7 @@ function FaxOrder() constructor {
     self.pages_completed = 0;
     self.fax_number = fax_pile_get_ten_digit_number();
     self.fax_title = fax_pile_get_random_title();
+    self.fax_number_formatted = "(" + string_copy(self.fax_number, 1, 3) + ") " + string_copy(self.fax_number, 4, 3) + "-" + string_copy(self.fax_number, 7, 4);
 }
 
 function fax_pile_controller_init() {

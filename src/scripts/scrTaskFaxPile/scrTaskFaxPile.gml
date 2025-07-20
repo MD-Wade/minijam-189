@@ -43,6 +43,11 @@ function task_fax_pile_step_minigame() {
     }
 }
 function task_fax_pile_step_input() {
+    if (array_length(global.fax_pile_orders) <= 0) {
+        order_selection = 0;
+        return;
+    }
+
     if (keyboard_check_pressed(vk_up)) {
         order_selection --;
         audio_play_sound(sndUiSelection, 1, false);
@@ -57,6 +62,16 @@ function task_fax_pile_step_input() {
         if (order_selection >= array_length(global.fax_pile_orders)) {
             order_selection = 0;
         }
+    }
+
+    if (keyboard_check_pressed(vk_space) or keyboard_check_pressed(vk_enter)) {
+        global.fax_held = global.fax_pile_orders[order_selection];
+        array_delete(global.fax_pile_orders, order_selection, 1);
+        audio_play_sound(sndUiConfirm, 1, false);
+        with (FaxPileController) {
+            fax_pile_controller_update_stacks();
+        }
+        instance_destroy();
     }
 }
 
@@ -92,7 +107,6 @@ function task_fax_pile_draw_text() {
     draw_set_colour(c_white);
 
     var _string_current = "SELECT AN ORDER TO FAX.";
-    show_debug_message(global.fax_pile_orders);
     if (array_length(global.fax_pile_orders) <= 0) {
         _string_current = "NO ORDERS TO FAX.";
     }
@@ -119,7 +133,7 @@ function task_fax_pile_draw_orders() {
     for (var _order_index = 0; _order_index < _order_count; _order_index ++) {
         var _order_struct = global.fax_pile_orders[_order_index];
         var _order_selected = (_order_index == order_selection);
-        var _order_text = _order_struct.fax_title + " | " + string(_order_struct.pages_count) + " pages | " + _order_struct.fax_number;
+        var _order_text = string(_order_struct.pages_count) + " pages | "  + _order_struct.fax_number_formatted + " | " + _order_struct.fax_title;
 
         var _outline_width = 1;
         var _bbox_top = _order_y;
@@ -131,14 +145,14 @@ function task_fax_pile_draw_orders() {
 
         draw_set_colour(c_black);
         draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
-        draw_set_colour(_order_selected ? c_dkgray : c_ltgray);
+        draw_set_colour(_order_selected ? c_ltgray : c_dkgray);
         draw_rectangle(_bbox_left + _outline_width, 
             _bbox_top + _outline_width, 
             _bbox_right - _outline_width, 
             _bbox_bottom - _outline_width, 
             false);
         draw_set_colour(c_white);
-        draw_text_perlin(_text_x, _text_y, _order_text, 2.0, 0.1, 4.0, c_white, c_black, 1);
+        draw_text_perlin(_text_x, _text_y, _order_text, 2.0, 0.1, 4.0, c_white, c_black, 0.5);
 
         _order_y += order_height;
     }
@@ -146,5 +160,9 @@ function task_fax_pile_draw_orders() {
 }
 
 function task_fax_pile_minigame_entry() {
+    if (not is_undefined(global.fax_held)) {
+        array_insert(global.fax_pile_orders, 0, global.fax_held);
+    }
+    global.fax_held = undefined;
     task_parent_minigame_entry(TaskFaxPile);
 }

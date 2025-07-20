@@ -31,8 +31,8 @@ function PromptTab(_button_label, _description_label) constructor {
     }
 }
 
-#macro LISTENER_HEIGHT 64  // How high the "ears" are above the ground plane.
-#macro LISTENER_SETBACK 32 // How far "behind" the player the ears are.
+#macro LISTENER_HEIGHT 64
+#macro LISTENER_SETBACK 32
 
 function player_init() {
     player_init_node();
@@ -42,13 +42,17 @@ function player_init() {
     player_init_performance();
     player_init_prompts();
     player_init_audio_listener();
-    player_init_fax_pile();
     player_init_age();
     player_init_animation();
+    player_init_fax();
+    player_init_movement();
     player_prompt_set_active(0);
 }
+function player_init_movement() {
+    movement_speed_base = 4;
+    movement_speed_fax = 2.8;
+}
 function player_init_node() {
-    node_movement_speed = 4;
     node_target_instance = noone;
     node_current_instance = instance_nearest(x, y, Node);
     x = node_current_instance.x;
@@ -71,6 +75,7 @@ function player_init_run() {
     run_sound_instance_last = -1;
     run_tick = 0;
     run_tick_maximum = 0.2;
+    run_tick_maximum_fax = 0.4;
     run_previous_x = x;
 }
 function player_init_audio_listener() {
@@ -129,9 +134,6 @@ function player_init_performance() {
     performance_bar_x2 = performance_bar_x1 + _performance_bar_width;
     performance_bar_y2 = performance_bar_y1 + _performance_bar_height;
 }
-function player_init_fax_pile() {
-    global.fax_pile_count = 0;
-}
 function player_init_age() {
     age_current = E_STATES_PLAGER_AGE.YOUNG;
 }
@@ -143,9 +145,13 @@ function player_init_animation() {
     sprite_index = sprite_array[E_STATES_PLAGER_AGE.YOUNG];
     image_index = 0;
 }
+function player_init_fax() {
+    global.fax_held = undefined;
+}
 
 function player_step() {
     player_depth_update();
+    player_animation_update();
     player_audio_emitter_update();
 
     switch (state_current) {
@@ -278,9 +284,10 @@ function player_node_move(_node_instance) {
     var _target_y = _node_instance.y;
     node_current_instance = noone;
     node_target_instance = _node_instance;
+    var _movement_speed = player_get_path_speed();
     player_state_set(E_STATES_PLAYER.MOVING);
     mp_grid_path(global.pathfinding_grid, pathfinding_path, x, y, _target_x, _target_y, true);
-    path_start(pathfinding_path, node_movement_speed, path_action_stop, false);
+    path_start(pathfinding_path, _movement_speed, path_action_stop, false);
 }
 function player_depth_update() {
     depth = -y;
@@ -297,15 +304,18 @@ function player_run() {
         player_run_end();
     }
 
+    path_speed = player_get_path_speed();
+
     var _direction_current = sign(x - run_previous_x);
     if (_direction_current != 0) {
         image_xscale = _direction_current;
     }
     run_previous_x = x;
 
+    var _run_tick_target = (is_undefined(global.fax_held)) ? run_tick_maximum : run_tick_maximum_fax;
     var _gamespeed_fps = game_get_speed(gamespeed_fps);
     run_tick += (1 / _gamespeed_fps);
-    if (run_tick >= run_tick_maximum) {
+    if (run_tick >= _run_tick_target) {
         player_run_tick_target();
     }
 }
@@ -397,7 +407,14 @@ function player_audio_emitter_update() {
         audio_emitter, x, 0, y
     );
 }
+function player_animation_update() {
+    sprite_index = sprite_array[age_current];
+    image_index = (global.fax_held != undefined) ? 1 : 0;
+}
 
+function player_get_path_speed() {
+    return (is_undefined(global.fax_held)) ? movement_speed_base : movement_speed_fax;
+}
 function player_get_node_index_from_input(_input) {
     var _real = real(_input);
     return (_real - 1);
