@@ -40,6 +40,7 @@
   "name":"Mini Jam 189",
   "resources":[
     {"id":{"name":"fntFaxHeader","path":"fonts/fntFaxHeader/fntFaxHeader.yy",},},
+    {"id":{"name":"fntFaxOrderList","path":"fonts/fntFaxOrderList/fntFaxOrderList.yy",},},
     {"id":{"name":"fntHud","path":"fonts/fntHud/fntHud.yy",},},
     {"id":{"name":"fntHudSmall","path":"fonts/fntHudSmall/fntHudSmall.yy",},},
     {"id":{"name":"fntPhoneDialogue","path":"fonts/fntPhoneDialogue/fntPhoneDialogue.yy",},},

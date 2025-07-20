@@ -21,7 +21,7 @@ function task_fax_pile_init_orders() {
     order_start_x = dialogue_box_x1;
     order_start_y = dialogue_box_y2 + 24;
     order_width = (dialogue_box_width + 128);
-    order_height = 24;
+    order_height = 20;
 }
 
 function task_fax_pile_step() {
@@ -115,13 +115,13 @@ function task_fax_pile_draw_orders() {
 
     draw_set_halign(fa_left);
     draw_set_valign(fa_middle);
-    draw_set_font(fntPhoneResponse);
+    draw_set_font(fntFaxOrderList);
     for (var _order_index = 0; _order_index < _order_count; _order_index ++) {
         var _order_struct = global.fax_pile_orders[_order_index];
         var _order_selected = (_order_index == order_selection);
         var _order_text = _order_struct.fax_title + " | " + string(_order_struct.pages_count) + " pages | " + _order_struct.fax_number;
 
-        var _outline_width = 2;
+        var _outline_width = 1;
         var _bbox_top = _order_y;
         var _bbox_left = _order_x;
         var _bbox_right = _order_x + order_width;
@@ -131,14 +131,14 @@ function task_fax_pile_draw_orders() {
 
         draw_set_colour(c_black);
         draw_rectangle(_bbox_left, _bbox_top, _bbox_right, _bbox_bottom, false);
-        draw_set_colour(_order_selected ? c_yellow : c_white);
+        draw_set_colour(_order_selected ? c_dkgray : c_ltgray);
         draw_rectangle(_bbox_left + _outline_width, 
             _bbox_top + _outline_width, 
             _bbox_right - _outline_width, 
             _bbox_bottom - _outline_width, 
             false);
         draw_set_colour(c_white);
-        draw_text_perlin(_text_x, _text_y, _order_text, 2.0, 0.1, 4.0, c_ltgray, c_black, 1);
+        draw_text_perlin(_text_x, _text_y, _order_text, 2.0, 0.1, 4.0, c_white, c_black, 1);
 
         _order_y += order_height;
     }
