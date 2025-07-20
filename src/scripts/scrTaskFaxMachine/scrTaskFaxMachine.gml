@@ -41,10 +41,11 @@ function task_fax_machine_draw_scene() {
 
     draw_sprite(sSceneFaxMachine, 0, _current_pos_x, _current_pos_y);
     draw_sprite(sSceneFaxMachine, 1, _current_pos_x, _current_pos_y);
+    draw_sprite(sSceneFaxMachine, 2, _current_pos_x, _current_pos_y);
 
     var _hand_pos_x = lerp(hand_start_x, mouse_x, state_tick_tween);
     var _hand_pos_y = lerp(hand_start_y, mouse_y, state_tick_tween);
-    draw_sprite(sTaskHandFaxMachine, 0, _hand_pos_x, _hand_pos_y);
+    //draw_sprite(sTaskHandFaxMachine, 0, _hand_pos_x, _hand_pos_y);
 }
 
 function task_fax_machine_minigame_entry() {
