@@ -153,6 +153,7 @@ function player_step() {
     player_depth_update();
     player_animation_update();
     player_audio_emitter_update();
+    player_step_camera();
 
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:
@@ -410,6 +411,19 @@ function player_audio_emitter_update() {
 function player_animation_update() {
     sprite_index = sprite_array[age_current];
     image_index = (global.fax_held != undefined) ? 1 : 0;
+}
+function player_step_camera() {
+    var _camera_target_x = 0;
+    if (x > room_width / 2) {
+        _camera_target_x = (room_width / 2);
+    }
+
+    var _x_view = camera_get_view_x(view_camera[0]);
+    var _y_view = camera_get_view_y(view_camera[0]);
+    camera_set_view_pos(view_camera[0],
+        lerp(_x_view, _camera_target_x, 0.025),
+        _y_view
+    );
 }
 
 function player_get_path_speed() {

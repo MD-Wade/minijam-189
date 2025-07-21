@@ -255,7 +255,7 @@ function npc_run_tick_target() {
 function npc_get_free_space() {
     var _maximum_attempt_count = 100;
     do {
-        var _desired_x = irandom(room_width);
+        var _desired_x = irandom(room_width / 2);
         var _desired_y = irandom(room_height);
         _maximum_attempt_count --;
         if (_maximum_attempt_count <= 0) {
