@@ -1,0 +1,1 @@
+text_info_init();

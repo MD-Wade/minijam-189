@@ -1,3 +1,2 @@
 event_inherited();
-
-depth -= 24;
+phone_init();

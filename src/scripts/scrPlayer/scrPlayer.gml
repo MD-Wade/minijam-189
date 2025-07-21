@@ -126,7 +126,7 @@ function player_init_prompts() {
     prompt_length_mod_max = 1.10;
 }
 function player_init_performance() {
-    performance_value = 100;
+    global.performance_value = 100;
     var _performance_bar_width = 72;
     var _performance_bar_height = 16;
     performance_bar_x1 = 0;
@@ -258,7 +258,7 @@ function player_draw_performance_bar() {
         performance_bar_y1 + _outline_width,
         performance_bar_x2 - _outline_width,
         performance_bar_y2 - _outline_width,
-        performance_value,
+        global.performance_value,
         c_black, c_maroon, c_red, 0, true, true);
 }
 

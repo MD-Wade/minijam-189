@@ -19,6 +19,61 @@ array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
     ]
 ));
 
+array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
+    "Our intern just accidentally deleted some very important data we're trying to reconcile. " +
+    "Can you remind me what it is we actually do here?",
+    [
+        new TaskPhoneResponse("We make cookies.", 0),
+        new TaskPhoneResponse("We make fax machines.", -5),
+        new TaskPhoneResponse("We make coffee.", -10),
+        new TaskPhoneResponse("Who's 'we'?", -8)
+    ]
+));
+
+array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
+    "I need you to fax the boss the latest cookie sales report. Can you do that?",
+    [
+        new TaskPhoneResponse("Put it on the pile!", 0),
+        new TaskPhoneResponse("Fax? Okay, grandpa.", -5),
+        new TaskPhoneResponse("I don't have a fax machine.", -10),
+        new TaskPhoneResponse("Can I just email it?", -8)
+    ]
+));
+
+array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
+    "Pfft.. heh... Is your refrigerator running?",
+    [
+        new TaskPhoneResponse("I don't have time for this.", 0),
+        new TaskPhoneResponse("Yes, it is.", 0),
+        new TaskPhoneResponse("No, it isn't.", 0),
+        new TaskPhoneResponse("I don't know, is it?", 0)
+    ]
+));
+
+array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
+    "So, we -- hello? *muffled noise* -- Uhhp, sorry, *crunch* -- " +
+    "Man, these cookies are to die for. Heh. You tried these yet? " +
+    "Anyway, what's the symbol you put in an email again? ",
+    [
+        new TaskPhoneResponse("@", 0),
+        new TaskPhoneResponse("#", 0),
+        new TaskPhoneResponse("<email> Email </email>", 0),
+        new TaskPhoneResponse("%", 0)
+    ]
+));
+
+array_push(global.task_pool_phone_conversations, new TaskPhoneConversation(
+    "DUDE! I was checkin' my email, right, and I saw this thing about, like, " +
+    "'you're the millionth visitor to a website', and I was like, 'whoa, that's me!' " +
+    "Says, like, I won a million dollars. Right on!",
+    [
+        new TaskPhoneResponse("Please don't click that.", 0),
+        new TaskPhoneResponse("Dude, nice.", -4),
+        new TaskPhoneResponse("Gimme some.", -8),
+        new TaskPhoneResponse("Congratulations, you won!", -10)
+    ]
+));
+
 function task_phone_init() {
 	task_parent_init();
     task_parent_init_object(sprite_index);
@@ -30,7 +85,7 @@ function task_phone_init() {
 }
 function task_phone_init_text() {
     dialogue_incoming_box_x1 = (80);
-    dialogue_incoming_box_x2 = (room_width - 192);
+    dialogue_incoming_box_x2 = (room_width - 128);
     dialogue_incoming_box_y1 = (8);
     dialogue_incoming_box_y2 = (92);
     dialogue_incoming_text_x = (dialogue_incoming_box_x1 + 8);
@@ -46,7 +101,7 @@ function task_phone_init_text() {
 }
 function task_phone_init_conversation() {
     conversation = task_phone_get_conversation(1.0);
-    dialogue_incoming = auto_line_break(conversation.dialogue_incoming, dialogue_box_width / 2);
+    dialogue_incoming = auto_line_break(conversation.dialogue_incoming, (dialogue_box_width / 2) + 72);
     dialogue_response_options = conversation.response_options;
 }
 

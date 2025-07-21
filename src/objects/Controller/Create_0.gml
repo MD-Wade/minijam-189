@@ -6,5 +6,6 @@ instance_create_depth(0, 0, 0, MusicController);
 instance_create_depth(0, 0, 0, PathfindingController);
 instance_create_depth(0, 0, 0, NpcController);
 instance_create_depth(0, 0, 0, FaxPileController);
+instance_create_depth(0, 0, 0, TaskAssignmentController);
 
 room_goto_next();
