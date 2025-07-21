@@ -1,6 +1,5 @@
 function task_fax_pile_init() {
     task_parent_init();
-    task_parent_init_object(sTaskObjectFaxPile);
     task_fax_pile_init_dialogue();
     task_fax_pile_init_orders();
 

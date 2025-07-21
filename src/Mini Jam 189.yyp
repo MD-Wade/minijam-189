@@ -101,6 +101,7 @@
     {"id":{"name":"sndUiSelection","path":"sounds/sndUiSelection/sndUiSelection.yy",},},
     {"id":{"name":"sFaxDigitDisplay","path":"sprites/sFaxDigitDisplay/sFaxDigitDisplay.yy",},},
     {"id":{"name":"sFaxNumpad","path":"sprites/sFaxNumpad/sFaxNumpad.yy",},},
+    {"id":{"name":"sFaxNumpadSend","path":"sprites/sFaxNumpadSend/sFaxNumpadSend.yy",},},
     {"id":{"name":"sNode","path":"sprites/sNode/sNode.yy",},},
     {"id":{"name":"sNodeIndicator","path":"sprites/sNodeIndicator/sNodeIndicator.yy",},},
     {"id":{"name":"sNodeNpc","path":"sprites/sNodeNpc/sNodeNpc.yy",},},

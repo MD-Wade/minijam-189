@@ -146,7 +146,7 @@ function player_init_animation() {
     image_index = 0;
 }
 function player_init_fax() {
-    global.fax_held = undefined;
+    global.fax_held = new FaxOrder();
 }
 
 function player_step() {
