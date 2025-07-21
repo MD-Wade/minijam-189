@@ -34,10 +34,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"sTaskObjectFaxMachine",
-    "path":"sprites/sTaskObjectFaxMachine/sTaskObjectFaxMachine.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }
