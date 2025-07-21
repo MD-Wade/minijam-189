@@ -1,6 +1,6 @@
 function task_assignment_controller_init() {
-    tick_current = 11;
-    tick_max = 12.0;
+    tick_current = 0;
+    tick_max = 8.0;
 }
 function task_assignment_controller_init_probabilities() {
     assignment_probability_phone = 40;

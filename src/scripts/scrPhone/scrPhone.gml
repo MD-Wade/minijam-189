@@ -6,7 +6,7 @@ function phone_init() {
 	depth -= 24;
 	
 	tick_current = 0;
-	tick_maximum = 4;
+	tick_maximum = 12;
 	state_current = E_STATES_PHONE.IDLE;
 	animation_speed = 0.2;
 	image_speed = animation_speed;
@@ -52,6 +52,7 @@ function phone_call() {
 
 		state_current = E_STATES_PHONE.LINE_INCOMING;
 		tick_current = 0;
+		audio_play_sound(sndPhoneRing, 1, false);
 	}
 }
 function phone_call_miss() {

@@ -20,7 +20,7 @@ function npc_controller_init_spawn() {
 }
 function npc_controller_init_nodes() {
     global.node_fax_pile = Node2;
-    global.node_cookies = Node5;
+    global.node_cookies = Node4;
 
     global.nodes_npcs = [];
     var _nodes_npcs_count = instance_number(NodeNpc);

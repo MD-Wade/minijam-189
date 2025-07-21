@@ -7,8 +7,8 @@
   },
   "bitDepth":1,
   "bitRate":320,
-  "compression":0,
-  "conversionMode":0,
+  "compression":1,
+  "conversionMode":1,
   "duration":128.0,
   "name":"bgmMain",
   "parent":{

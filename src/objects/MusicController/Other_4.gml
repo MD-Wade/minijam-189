@@ -1,0 +1,1 @@
+music_controller_room_start();

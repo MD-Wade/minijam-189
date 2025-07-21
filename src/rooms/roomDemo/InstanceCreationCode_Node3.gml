@@ -1,3 +1,3 @@
 function node_action() {
-	task_phone_minigame_entry();
+	task_fax_machine_minigame_entry();
 }

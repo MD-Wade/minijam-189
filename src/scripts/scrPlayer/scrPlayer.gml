@@ -40,9 +40,9 @@ function player_init() {
     player_init_run();
     player_init_state();
     player_init_performance();
+    player_init_age();
     player_init_prompts();
     player_init_audio_listener();
-    player_init_age();
     player_init_animation();
     player_init_fax();
     player_init_movement();
@@ -115,8 +115,8 @@ function player_init_prompts() {
     var _border = 4;
     prompt_tab_width = 16;
     prompt_tab_height = 16;
-    prompt_tabs_begin_x = performance_bar_x1;
-    prompt_tabs_begin_y = performance_bar_y2;
+    prompt_tabs_begin_x = age_bar_x1;
+    prompt_tabs_begin_y = age_bar_y2;
     prompt_tabs_end_x = 0;
     prompt_tabs_end_y = (prompt_tabs_begin_y + (prompt_tab_height * node_count_total));
 
@@ -133,8 +133,17 @@ function player_init_performance() {
     performance_bar_y1 = 0;
     performance_bar_x2 = performance_bar_x1 + _performance_bar_width;
     performance_bar_y2 = performance_bar_y1 + _performance_bar_height;
+    
 }
 function player_init_age() {
+    global.age_tick = 0;
+    global.age_tick_maximum = 60 * 2;
+    var _performance_bar_width = 72;
+    var _performance_bar_height = 16;
+    age_bar_x1 = performance_bar_x1;
+    age_bar_y1 = performance_bar_y2;
+    age_bar_x2 = performance_bar_x2;
+    age_bar_y2 = age_bar_y1 + _performance_bar_height;
     age_current = E_STATES_PLAGER_AGE.YOUNG;
 }
 function player_init_animation() {
@@ -154,6 +163,7 @@ function player_step() {
     player_animation_update();
     player_audio_emitter_update();
     player_step_camera();
+    player_step_age();
 
     switch (state_current) {
         case E_STATES_PLAYER.IDLE:
@@ -168,6 +178,23 @@ function player_step() {
                 player_state_set(E_STATES_PLAYER.IDLE);
             }
             break;
+    }
+}
+function player_step_age() {
+    global.age_tick += (1 / game_get_speed(gamespeed_fps));
+    if (global.age_tick >= global.age_tick_maximum) {
+        global.age_tick = 0;
+        switch (age_current) {
+            case E_STATES_PLAGER_AGE.YOUNG:
+                age_current = E_STATES_PLAGER_AGE.MID;
+                break;
+            case E_STATES_PLAGER_AGE.MID:
+                age_current = E_STATES_PLAGER_AGE.GEEZER;
+                break;
+            case E_STATES_PLAGER_AGE.GEEZER:
+                // game over
+                break;
+        }
     }
 }
 
@@ -254,6 +281,13 @@ function player_draw_performance_bar() {
         performance_bar_x2,
         performance_bar_y2, false);
 
+    draw_rectangle(
+        age_bar_x1,
+        age_bar_y1,
+        age_bar_x2,
+        age_bar_y2, false
+    )
+
     draw_healthbar(
         performance_bar_x1 + _outline_width,
         performance_bar_y1 + _outline_width,
@@ -261,6 +295,15 @@ function player_draw_performance_bar() {
         performance_bar_y2 - _outline_width,
         global.performance_value,
         c_black, c_maroon, c_red, 0, true, true);
+
+    draw_healthbar(
+        age_bar_x1 + _outline_width,
+        age_bar_y1 + _outline_width,
+        age_bar_x2 - _outline_width,
+        age_bar_y2 - _outline_width,
+        (global.age_tick / global.age_tick_maximum) * 100,
+        c_black, c_navy, c_blue, 0, true, true
+    )
 }
 
 function player_node_input_check() {
@@ -427,7 +470,16 @@ function player_step_camera() {
 }
 
 function player_get_path_speed() {
-    return (is_undefined(global.fax_held)) ? movement_speed_base : movement_speed_fax;
+    var _speed_base = (is_undefined(global.fax_held)) ? movement_speed_base : movement_speed_fax;
+    switch (age_current) {
+        case E_STATES_PLAGER_AGE.YOUNG:
+            return _speed_base;
+        case E_STATES_PLAGER_AGE.MID:
+            return _speed_base * 0.8;
+        case E_STATES_PLAGER_AGE.GEEZER:
+            return _speed_base * 0.4;
+    }
+    return _speed_base;
 }
 function player_get_node_index_from_input(_input) {
     var _real = real(_input);

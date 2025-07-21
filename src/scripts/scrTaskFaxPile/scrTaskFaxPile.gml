@@ -162,6 +162,9 @@ function task_fax_pile_minigame_entry() {
     if (not is_undefined(global.fax_held)) {
         array_insert(global.fax_pile_orders, 0, global.fax_held);
     }
+    with (FaxPileController) {
+        fax_pile_controller_update_stacks();
+    }
     global.fax_held = undefined;
     task_parent_minigame_entry(TaskFaxPile);
 }

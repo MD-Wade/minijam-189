@@ -85,7 +85,7 @@ function task_phone_init() {
 }
 function task_phone_init_text() {
     dialogue_incoming_box_x1 = (80);
-    dialogue_incoming_box_x2 = (room_width - 128);
+    dialogue_incoming_box_x2 = ((room_width / 2) - 128);
     dialogue_incoming_box_y1 = (8);
     dialogue_incoming_box_y2 = (92);
     dialogue_incoming_text_x = (dialogue_incoming_box_x1 + 8);
