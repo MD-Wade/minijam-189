@@ -2,8 +2,8 @@
   "$GMSound":"",
   "%Name":"sndPhoneBegin",
   "audioGroupId":{
-    "name":"audiogroup_default",
-    "path":"audiogroups/audiogroup_default",
+    "name":"ag_sound",
+    "path":"audiogroups/ag_sound",
   },
   "bitDepth":1,
   "bitRate":320,

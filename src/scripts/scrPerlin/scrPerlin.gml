@@ -40,19 +40,20 @@ function perlin_noise_2d(_x, _y) {
 @description        Prepares the shader for rendering perlin noise
 */
 function shader_set_perlin_noise() {   
-    static _u_seed  = shader_get_uniform(shdPerlin, "u_seed");
-    static _u_table = shader_get_uniform(shdPerlin, "u_table");
- 
     shader_set(shdPerlin);
-    shader_set_uniform_f(_u_seed, global.perlin_noise_seed);
-    shader_set_uniform_i_array(_u_table, global.perlin_noise_table);
+    shader_set_uniform_f(shader_get_uniform(shdPerlin, "u_seed"), global.perlin_noise_seed);
+    shader_set_uniform_i_array(shader_get_uniform(shdPerlin, "u_table"), global.perlin_noise_table);
 }
 
 /*
 @function           perlin_noise_create_buffer
 @description        Creates a global buffer with perlin noise values
 */
-function perlin_noise_create_buffer() {
+function perlin_noise_create_buffer(_existing_data=undefined) {
+    if not is_undefined(_existing_data) {
+        global.perlin_noise_buffer = buffer_load(_existing_data);
+        return global.perlin_noise_buffer;
+    }
     var _surface_index = surface_create(C_PERLIN_SURFACE_SIZE, C_PERLIN_SURFACE_SIZE);
     var _buffer_surface = buffer_create(C_PERLIN_NOISE_BUFFER_SIZE << 2, buffer_fast, 1);
     var _buffer_result = buffer_create(C_PERLIN_NOISE_BUFFER_SIZE << 2, buffer_fast, 1);
@@ -91,6 +92,7 @@ function perlin_noise_create_buffer() {
 
     buffer_delete(_buffer_surface);
     global.perlin_noise_buffer = _buffer_result;
+    buffer_save(global.perlin_noise_buffer, "perlin_noise_buffer.dat");
     return _buffer_result;  
 }
 

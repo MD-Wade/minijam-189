@@ -32,13 +32,12 @@ function npc_init_target() {
     var _probability_fax = 40;                                          // 40% Chance of going to Fax Pile
     var _probability_cookies = 40;                                      // 40% Chance of going to Cookies (after Fax)
     var _probability_dawdle = 20;                                       // 20% Chance of just dawdling around (after Fax and Cookies)
-    var _spawned_at_cookies = (node_spawn == global.node_npc_cookies);  // If spawned at Cookies, don't go there again
 
     if (irandom(100) < _probability_fax) {
         node_target_instance = global.node_fax_pile;
         node_target_type = E_NPC_TARGETS.FAX_PILE;
         sprite_index = sNpcFax;
-    } else if (irandom(100) < _probability_cookies) and (not _spawned_at_cookies) {
+    } else if (irandom(100) < _probability_cookies) {
         node_target_instance = global.node_cookies;
         node_target_type = E_NPC_TARGETS.COOKIES;
     } else {
